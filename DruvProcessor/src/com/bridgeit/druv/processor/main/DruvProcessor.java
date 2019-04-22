@@ -324,7 +324,7 @@ public class DruvProcessor {
 			logExit("ERROR: IncorrectLine : " + line);
 		double feedRate = 0;
 		if (line.indexOf("F") > -1) {
-
+			
 			feedRate = Double.parseDouble(line.substring(line.indexOf("F") + 1));
 			selectedG1FeedRate = feedRate;
 		} else
@@ -371,14 +371,13 @@ public class DruvProcessor {
 				destX = destX / 2;
 			format("VFDX", '+', xFreq);
 			if (xDelay == 1) {
-				format("WTNX", '+', 1);			
+				format("WTNX", '+', 1);
 				
 				if (destX < 0)
 					format("MFAX", '-', Math.abs(destX));
 				else
-					format("MFAX", '+', destX);
+					format("MFAX", '+', destX);			
 				
-				writeG1Projections('X', '+', currentX, destX, selectedRate);
 				format("WTFX", '+', 0);
 			} else {
 				format("WTNX", '+', xDelay);
@@ -404,8 +403,7 @@ public class DruvProcessor {
 					format("MFAY", '-', Math.abs(destY));
 				else
 					format("MFAY", '+', destY);
-
-				writeG1Projections('Y', '+', currentY, destY, selectedRate);
+				
 				format("WTFY", '+', 0);
 			} else {
 				format("WTNY", '+', xDelay);
@@ -430,7 +428,7 @@ public class DruvProcessor {
 					format("MFAZ", '-', Math.abs(destZ));
 				else
 					format("MFAZ", '+', destZ);
-				writeG1Projections('Z', '+', currentZ, destZ, selectedRate);
+				
 				format("WTFZ", '+', 0);
 			} else {
 				format("WTNZ", '+', yDelay);
@@ -463,7 +461,7 @@ public class DruvProcessor {
 			writeG1ProjectionsTwoAxis('Z', 'X', currentZ, currentX, line, selectedRate);
 			break;
 		case Constants.Z_Y:
-			log("CURRENT Z" +   currentZ      +       "CURRENT Y"     +    currentY);
+		
 			writeG1ProjectionsTwoAxis('Z', 'Y', currentZ, currentY, line, selectedRate);
 			break;
 
@@ -521,7 +519,7 @@ public class DruvProcessor {
 		format("WTN" + first, '+', firstdelay);
 		format("WTN" + second, '+', seconddelay);
 
-		double slope = round((secondDest - secondOrigin) / (firstDest - firstOrigin));
+		double slope = round((secondDest - secondOrigin) / (firstDest - firstOrigin));		
 
 		FreqMinValue[] mins = conf.getFreq_mvs();
 		FreqMinValue selectedMVF1 = null;
@@ -567,10 +565,12 @@ public class DruvProcessor {
 		double next1, next2, nextStep1 = round(firstOrigin + firstPos), nextStep2 = round(secondOrigin + secondPos);
 		if (firstPos <= secondPos) {
 			// know x, calculate y
-			next1 = round(firstOrigin + firstPos); // we have x2
+			next1 = round(firstOrigin + firstPos); // we have x2			
+					
 			do {
 				// y2 = m(x2-x1) + y1
 				next2 = round(slope * (next1 - firstOrigin) + secondOrigin);
+				
 				if (next2 > secondDest)
 					next2 = secondDest;
 				if (next2 >= nextStep2) {
