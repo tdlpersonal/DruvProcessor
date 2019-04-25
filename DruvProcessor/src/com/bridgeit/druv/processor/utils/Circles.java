@@ -13,14 +13,14 @@ public class Circles {
 	static long startTime= Calendar.getInstance().getTimeInMillis();
 	static NumberFormat numberFormat = NumberFormat.getInstance();
 	
-    public Point[] findCentersOfCircles(Point p1, Point p2, double r) {
-        if (r < 0.0) throw new IllegalArgumentException("the radius can't be negative");
-        if (r == 0.0 && p1 != p2) throw new IllegalArgumentException("no circles can ever be drawn");
+    public Point[] findCentersOfCircles(Point p1, Point p2, double r) throws Exception {
+        if (r < 0.0) throw new Exception("the radius can't be negative");
+        if (r == 0.0 && p1 != p2) throw new Exception("no circles can ever be drawn");
         if (r == 0.0) return new Point[]{p1, p1};
-        if (Objects.equals(p1, p2)) throw new IllegalArgumentException("an infinite number of circles can be drawn");
+        if (Objects.equals(p1, p2)) throw new Exception("an infinite number of circles can be drawn");
         double distance = p1.distanceFrom(p2);
         double diameter = 2.0 * r;
-        if (distance > diameter) throw new IllegalArgumentException("the points are too far apart to draw a circle");
+        if (distance > diameter) throw new Exception("the points are too far apart to draw a circle");
         Point center = new Point((p1.x + p2.x) / 2.0, (p1.y + p2.y) / 2.0);
         if (distance == diameter) return new Point[]{center, center};
         double mirrorDistance = Math.sqrt(r * r - distance * distance / 4.0);
@@ -32,7 +32,7 @@ public class Circles {
         };
     }
  
-    public ArrayList<Point> getPointsOfCircle(Point x, Point y, double radius,double increment,String mode)
+    public ArrayList<Point> getPointsOfCircle(Point x, Point y, double radius,double increment,String mode, double firstPos, double firstNeg, double secondPos, double secondNeg) throws Exception
     {
     	long time = Calendar.getInstance().getTimeInMillis();
     	Point[] centers = findCentersOfCircles(x, y, radius);
@@ -84,8 +84,9 @@ public class Circles {
     	ArrayList<Point>  rearrangedList2 = rearrangeList(actualListPoints_2, x, y);
     	time = displayTime("Re-arrange for Second  Circle", time);
     	
+    	ArrayList<Point>  tmpList = null, finalList = null;
     	if(rearrangedList2.size()==0)
-    		return rearrangedList1;
+    		tmpList = rearrangedList1;
     	else 
     	{
     		/*for(int i=0;i<rearrangedList1.size();i++)
@@ -101,10 +102,35 @@ public class Circles {
     		}
     		*/
     		if(rearrangedList1.size()<=rearrangedList2.size())
-    			return rearrangedList1;
+    			tmpList =  rearrangedList1;
     		else 
-    			return rearrangedList2;
+    			tmpList = rearrangedList2;
     	}
+    	
+    	
+    	finalList = new ArrayList<Point>();
+    	finalList.add(x);
+    	// MinMV filtering logic 
+    	
+    	for(int i=0;i<tmpList.size();i++)
+    	{
+    		Point prev = finalList.get(finalList.size()-1);
+    		p = tmpList.get(i);
+    		double delta = p.x-prev.x;
+    		if(delta<0 && delta< firstNeg)
+    			continue;
+    		if(delta>0 && delta > firstPos)
+    			continue;
+    		delta = p.y-prev.y;
+    		if(delta<0 && delta< secondNeg)
+    			continue;
+    		if(delta>0 && delta > secondPos)
+    			continue;
+    		finalList.add(p);
+    		
+    	}
+    	finalList.add(y);
+    	return finalList;
     	
     }
     
@@ -270,16 +296,16 @@ public class Circles {
         return Math.sqrt(Math.pow((P2.x - P1.x), 2) + Math.pow((P2.y - P1.y), 2));
     }
 
-    public static void main(String[] args) throws IOException {
-    	numberFormat.setMaximumFractionDigits(4);
-		numberFormat.setMinimumFractionDigits(4);
+    public static void main(String[] args) throws Exception{
+    	numberFormat.setMaximumFractionDigits(3);
+		numberFormat.setMinimumFractionDigits(3);
 		numberFormat.setMaximumIntegerDigits(5);
 		numberFormat.setMinimumIntegerDigits(5);
 		numberFormat.setGroupingUsed(false);
 		
 		Circles c = new Circles();
 		
-		ArrayList<Point> points = c.getPointsOfCircle(new Point(143.0, 200.0),new Point(105.0, 232.0),  32, .001,"G3");
+		ArrayList<Point> points = c.getPointsOfCircle(new Point(143.0, 200.0),new Point(105.0, 232.0),  32, .001,"G3",.200,.120,.300,.150);
 		
 		for(int i=0;i<points.size();i++)
 		{

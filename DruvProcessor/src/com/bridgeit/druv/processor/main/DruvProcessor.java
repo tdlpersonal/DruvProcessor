@@ -25,7 +25,9 @@ import com.bridgeit.druv.processor.domains.FreqMinValue;
 import com.bridgeit.druv.processor.domains.MVValue;
 import com.bridgeit.druv.processor.domains.MachineConfiguration;
 import com.bridgeit.druv.processor.domains.Rapid_Frequency;
+import com.bridgeit.druv.processor.utils.Circles;
 import com.bridgeit.druv.processor.utils.Constants;
+import com.bridgeit.druv.processor.utils.Point;
 import com.google.gson.Gson;
 import com.google.gson.stream.JsonReader;
 
@@ -246,10 +248,48 @@ public class DruvProcessor {
 				else
 					gen.WriteLine("(SDON-00000.000,)");
 				log(line);
-			} else
+			} 
+			else if ( (line.startsWith("G2") || line.startsWith("G02")) && !line.startsWith("G20") && !line.startsWith("G21") && !line.startsWith("G28")
+					
+					) {
+				currentCode = "G2";
+				if (line.startsWith("G02"))
+					processG2G3(line.substring(3),"G2");
+				else
+					processG2G3(line.substring(2),"G3");
+			}else if ( (line.startsWith("G3") || line.startsWith("G03")) && !line.startsWith("G20") && !line.startsWith("G21") && !line.startsWith("G28")
+					
+					) {
+				currentCode = "G3";
+				if (line.startsWith("G03"))
+					processG2G3(line.substring(3),"G3");
+				else
+					processG2G3(line.substring(2),"G3");
+			}
+			else
 				System.err.println("TO BE IMPLEMENTED: " + line);
 		}
 		gen.end();
+	}
+
+	private void processG2G3(String line, String mode) throws  Exception {
+		// TODO Auto-generated method stub
+		resetVFDWritten();
+		log("Processing line in " + mode +  ":  " + line);
+		int op = determineXYZ(line);
+		if (op == 0)
+			logExit("ERROR: IncorrectLine : " + line);
+		FeedRates feedRate = getFeedRate(line);
+		boolean isG18 = setFlags.containsKey("G18");
+		switch (op) {
+		case Constants.X_Z: 
+			writeG2G3Projections('X', 'Z', currentX, currentZ, line, feedRate, mode);
+			break;
+		case Constants.Z_X: 
+			writeG2G3Projections('Z', 'X', currentZ, currentX, line, feedRate, mode);
+			break;
+		
+		}
 	}
 
 	private void writeG28() throws Exception {
@@ -315,13 +355,7 @@ public class DruvProcessor {
 		}
 	}
 
-	private void processG1(String line) throws Exception {
-
-		resetVFDWritten();
-		log("Processing line in G1 :  " + line);
-		int op = determineXYZ(line);
-		if (op == 0)
-			logExit("ERROR: IncorrectLine : " + line);
+	private FeedRates getFeedRate(String  line) throws Exception {
 		double feedRate = 0;
 		if (line.indexOf("F") > -1) {
 			
@@ -353,11 +387,22 @@ public class DruvProcessor {
 		if (!foundRate)
 			logExit("ERROR in Line : " + lineNum + ", FeedRate from line " + feedRate
 					+ " is not present in machine configuration feedrates");
+		return selectedRate;
+		
+	}
+	
+	private void processG1(String line) throws Exception {
 
+		resetVFDWritten();
+		log("Processing line in G1 :  " + line);
+		int op = determineXYZ(line);
+		if (op == 0)
+			logExit("ERROR: IncorrectLine : " + line);
+		FeedRates feedRate = getFeedRate(line);
+		
 		boolean isG18 = setFlags.containsKey("G18");
 		switch (op) {
 		// X2.5F0.025
-		
 		
 		case Constants.ONLY_X:
 			double destX = 0;
@@ -369,8 +414,8 @@ public class DruvProcessor {
 				destX = destX * 25.4;
 			if (isG18)
 				destX = destX / 2;
-			format("VFDX", '+', xFreq);
-			if (xDelay == 1) {
+			format("VFDX", '+', feedRate.getFreq_x());
+			if (feedRate.getDelay_x()== 1) {
 				format("WTNX", '+', 1);
 				
 				if (destX < 0)
@@ -380,8 +425,8 @@ public class DruvProcessor {
 				
 				format("WTFX", '+', 0);
 			} else {
-				format("WTNX", '+', xDelay);
-				writeG1Projections('X', '+', currentX, destX, selectedRate);
+				format("WTNX", '+', feedRate.getDelay_x());
+				writeG1Projections('X', '+', currentX, destX, feedRate);
 				format("WTFX", '+', 0);
 			}
 			log("INSIDE G1 ONLY_X");
@@ -395,8 +440,8 @@ public class DruvProcessor {
 			if (setFlags.containsKey("G20"))
 				destY = destY * 25.4;
 
-			format("VFDY", '+', yFreq);
-			if (yDelay == 1) {
+			format("VFDY", '+', feedRate.getFreq_y());
+			if (feedRate.getDelay_y() == 1) {
 				format("WTNY", '+', 1);
 				
 				if (destY < 0)
@@ -406,8 +451,8 @@ public class DruvProcessor {
 				
 				format("WTFY", '+', 0);
 			} else {
-				format("WTNY", '+', xDelay);
-				writeG1Projections('Y', '+', currentY, destY, selectedRate);
+				format("WTNY", '+', feedRate.getDelay_y());
+				writeG1Projections('Y', '+', currentY, destY, feedRate);
 				format("WTFY", '+', 0);
 			}
 			log("INSIDE G1 ONLY_Y");
@@ -421,8 +466,8 @@ public class DruvProcessor {
 			if (setFlags.containsKey("G20"))
 				destZ = destZ * 25.4;
 
-			format("VFDZ", '+', zFreq);
-			if (zDelay == 1) {
+			format("VFDZ", '+', feedRate.getFreq_z());
+			if (feedRate.getDelay_z()== 1) {
 				format("WTNZ", '+', 1);				
 				if (destZ < 0)
 					format("MFAZ", '-', Math.abs(destZ));
@@ -431,8 +476,8 @@ public class DruvProcessor {
 				
 				format("WTFZ", '+', 0);
 			} else {
-				format("WTNZ", '+', yDelay);
-				writeG1Projections('Z', '+', currentZ, destZ, selectedRate);
+				format("WTNZ", '+', feedRate.getDelay_z());
+				writeG1Projections('Z', '+', currentZ, destZ, feedRate);
 				format("WTFZ", '+', 0);
 			}
 			log("INSIDE G1 ONLY_Z");
@@ -440,29 +485,29 @@ public class DruvProcessor {
 		case Constants.X_Y:
 			// X20.0Y10.0F0.1
 			
-			writeG1ProjectionsTwoAxis('X', 'Y', currentX, currentY, line, selectedRate);
+			writeG1ProjectionsTwoAxis('X', 'Y', currentX, currentY, line, feedRate);
 			break;
 		case Constants.X_Z:
 			
-			writeG1ProjectionsTwoAxis('X', 'Z', currentX, currentZ, line, selectedRate);
+			writeG1ProjectionsTwoAxis('X', 'Z', currentX, currentZ, line, feedRate);
 			break;
 
 		case Constants.Y_Z:
 			
-			writeG1ProjectionsTwoAxis('Y', 'Z', currentY, currentZ, line, selectedRate);
+			writeG1ProjectionsTwoAxis('Y', 'Z', currentY, currentZ, line, feedRate);
 			break;
 		case Constants.Y_X:
 			
-			writeG1ProjectionsTwoAxis('Y', 'X', currentY, currentX, line, selectedRate);
+			writeG1ProjectionsTwoAxis('Y', 'X', currentY, currentX, line, feedRate);
 			break;
 
 		case Constants.Z_X:
 			
-			writeG1ProjectionsTwoAxis('Z', 'X', currentZ, currentX, line, selectedRate);
+			writeG1ProjectionsTwoAxis('Z', 'X', currentZ, currentX, line, feedRate);
 			break;
 		case Constants.Z_Y:
 		
-			writeG1ProjectionsTwoAxis('Z', 'Y', currentZ, currentY, line, selectedRate);
+			writeG1ProjectionsTwoAxis('Z', 'Y', currentZ, currentY, line, feedRate);
 			break;
 
 		default:
@@ -472,15 +517,138 @@ public class DruvProcessor {
 		}
 	}
 
+	private void writeG2G3Projections(char first,char second,double firstOrigin, double secondOrigin,
+			String line, FeedRates selectedRate,String mode) throws Exception {
+		log("SRC: " + currentX + ":" + currentY + ":" + currentZ);
+		double firstDest = 0, secondDest = 0;
+		firstDest = Double.parseDouble(line.substring(1, line.indexOf(second)));
+		secondDest = Double.parseDouble(line.substring(line.indexOf(second) + 1, line.indexOf("R")));
+		double radius = Double.parseDouble(line.substring(line.indexOf("R")+1,line.indexOf("F")));
+		if (setFlags.containsKey("G18")) {
+			if (first == 'X')
+				firstDest = firstDest / 2;
+			if (second == 'X')
+				secondDest = secondDest / 2;
+		}
+		if (setFlags.containsKey("G20")) {
+			firstDest = firstDest * 25.4;
+			secondDest = secondDest * 25.4;
+		}
+		log("Procesing  "+mode +": (" + first + "," + second + ") -> (" + firstOrigin + "," + secondOrigin
+				+ ") -> (" + firstDest + "," + secondDest + ")");
+		double firstFreq = 'X' == first ? selectedRate.getFreq_x()
+				: ('Y' == first ? selectedRate.getFreq_y() : selectedRate.getFreq_z());
+		double secondFreq = 'X' == second ? selectedRate.getFreq_x()
+				: ('Y' == second ? selectedRate.getFreq_y() : selectedRate.getFreq_z());
+
+		format("VFD" + first, '+', firstFreq);
+		format("VFD" + second, '+', secondFreq);
+		int firstdelay = 'X' == first ? selectedRate.getDelay_x()
+				: ('Y' == first ? selectedRate.getDelay_y() : selectedRate.getDelay_z());
+		int seconddelay = 'X' == second ? selectedRate.getDelay_x()
+				: ('Y' == second ? selectedRate.getDelay_y() : selectedRate.getDelay_z());
+
+		format("WTN" + first, '+', firstdelay);
+		format("WTN" + second, '+', seconddelay);
+		
+		FreqMinValue[] mins = conf.getFreq_mvs();
+		FreqMinValue selectedMVF1 = null;
+		for (int i = 0; i < mins.length; i++) {
+			FreqMinValue mvF = mins[i];
+			if (mvF.getFreq() == (first == 'X' ? selectedRate.getFreq_x()
+					: (first == 'Y' ? selectedRate.getFreq_y() : selectedRate.getFreq_z()))) {
+				selectedMVF1 = mvF;
+				break;
+			}
+
+		}
+		if (selectedMVF1 == null)
+			logExit("ERROR: No MV Frequency " + (first == 'X' ? selectedRate.getFreq_x()
+					: (first == 'Y' ? selectedRate.getFreq_y() : selectedRate.getFreq_z())) + " found in XMV");
+
+		FreqMinValue selectedMVF2 = null;
+		for (int i = 0; i < mins.length; i++) {
+			FreqMinValue mvF = mins[i];
+			if (mvF.getFreq() == (second == 'X' ? selectedRate.getFreq_x()
+					: (second == 'Y' ? selectedRate.getFreq_y() : selectedRate.getFreq_z()))) {
+				selectedMVF2 = mvF;
+				break;
+			}
+
+		}
+		if (selectedMVF2 == null)
+			logExit("ERROR: No MV Frequency " + (second == 'X' ? selectedRate.getFreq_x()
+					: (second == 'Y' ? selectedRate.getFreq_y() : selectedRate.getFreq_z())) + " found in XMV");
+
+		double firstPos = 0, firstNeg = 0, secondPos = 0, secondNeg = 0;
+
+		firstPos = first == 'X' ? selectedMVF1.getPos_mvx()
+				: (first == 'Y' ? selectedMVF1.getPos_mvy() : selectedMVF1.getPos_mvz());
+		firstNeg = first == 'X' ? selectedMVF1.getNeg_mvx()
+				: (first == 'Y' ? selectedMVF1.getNeg_mvy() : selectedMVF1.getNeg_mvz());
+
+		secondPos = second == 'X' ? selectedMVF1.getPos_mvx()
+				: (second == 'Y' ? selectedMVF1.getPos_mvy() : selectedMVF1.getPos_mvz());
+		firstNeg = first == 'X' ? selectedMVF1.getNeg_mvx()
+				: (first == 'Y' ? selectedMVF1.getNeg_mvy() : selectedMVF1.getNeg_mvz());
+
+		ArrayList<Point> pointsList = new Circles().getPointsOfCircle(new Point(firstOrigin,secondOrigin), new Point(firstDest,secondDest), radius, 0.001, mode, firstPos, firstNeg, secondPos, secondNeg);
+		System.out.println(pointsList.size());
+		
+		for(int i=0;i<pointsList.size();i++)
+		{
+			
+			Point p = pointsList.get(i);
+			if(i>0)
+			{
+				Point tmp = pointsList.get(i-1);
+				if(tmp.equals(p))
+					continue;
+			}
+			formatG2G3(first, p.x<0?'-':'+', p.x);
+			formatG2G3(second, p.y<0?'-':'+', p.y);
+		}
+		
+		format("WTF" + first, '+', 0);
+		format("WTF" + second, '+', 0);
+
+		switch (first) {
+		case 'X':
+			currentX = firstDest;
+			break;
+		case 'Y':
+			currentY = firstDest;
+			break;
+		case 'Z':
+			currentZ = firstDest;
+			break;
+		}
+
+		switch (second) {
+		case 'X':
+			currentX = secondDest;
+			break;
+		case 'Y':
+			currentY = secondDest;
+			break;
+		case 'Z':
+			currentZ = secondDest;
+			break;
+		}
+
+		log("Dest: " + currentX + ":" + currentY + ":" + currentZ);
+
+		
+		
+	}
+	
 	private void writeG1ProjectionsTwoAxis(char first, char second, double firstOrigin, double secondOrigin,
 			String line, FeedRates selectedRate) throws Exception {
 		// TODO Auto-generated method stub
 		// X20.0Y10.0F0.1
 
 		log("SRC: " + currentX + ":" + currentY + ":" + currentZ);
-
 		double firstDest = 0, secondDest = 0;
-
 		firstDest = Double.parseDouble(line.substring(1, line.indexOf(second)));
 		if (line.indexOf("F") > -1)
 			secondDest = Double.parseDouble(line.substring(line.indexOf(second) + 1, line.indexOf("F")));
@@ -711,6 +879,10 @@ public class DruvProcessor {
 
 	}
 
+	private void formatG2G3(char axis, char sign, double value) throws Exception {
+		formatG1(axis, sign, value); 
+	}
+	
 	private void formatG1(char axis, char sign, double value) throws Exception {
 		value = round(value);
 		String strCommand = "MFAX";
