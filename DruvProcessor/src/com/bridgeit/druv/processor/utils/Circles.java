@@ -109,27 +109,33 @@ public class Circles {
     	
     	
     	finalList = new ArrayList<Point>();
-    	finalList.add(x);
+    	
     	// MinMV filtering logic 
     	
-    	for(int i=0;i<tmpList.size();i++)
-    	{
-    		Point prev = finalList.get(finalList.size()-1);
-    		p = tmpList.get(i);
-    		double delta = p.x-prev.x;
-    		if(delta<0 && delta< firstNeg)
-    			continue;
-    		if(delta>0 && delta > firstPos)
-    			continue;
-    		delta = p.y-prev.y;
-    		if(delta<0 && delta< secondNeg)
-    			continue;
-    		if(delta>0 && delta > secondPos)
-    			continue;
-    		finalList.add(p);
-    		
-    	}
-    	finalList.add(y);
+    	Point prev = tmpList.get(0);
+		for(int i=1;i<tmpList.size();i++)
+		{
+			
+			Point next = tmpList.get(i);
+			boolean rejected = false; // set this boolean to true if next point should not be written because it has distance 
+			
+			if(next.x-prev.x<0 && Math.abs(next.x-prev.x) < firstNeg)
+				rejected = true; // ( next.x-prev.x negative means you are moving to left, neg MV should be considered. reject if diff is less than minMV
+			if(next.x-prev.x>=0 && Math.abs(next.x-prev.x) < firstPos)
+				rejected = true; // ( next.x-prev.x positive means you are moving to right , pos MV should be considered. reject if diff is less than minMV
+			if(next.y-prev.y<0 && Math.abs(next.y-prev.y) < secondNeg)
+				rejected = true; // ( next.x-prev.x negative means you are moving to left, neg MV should be considered. reject if diff is less than minMV
+			if(next.y-prev.y>=0 && Math.abs(next.y-prev.y) < secondPos)
+				rejected = true; // ( next.x-prev.x positive means you are moving to right , pos MV should be considered. reject if diff is less than minMV
+						
+			if(!rejected)
+			{
+				finalList.add(next);
+				prev = next; // assign written point to prev so that next comparison will be done referring to it 
+			}
+		}
+    	
+    	
     	return finalList;
     	
     }

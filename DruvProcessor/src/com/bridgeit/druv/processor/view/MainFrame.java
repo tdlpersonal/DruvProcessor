@@ -1,14 +1,22 @@
 package com.bridgeit.druv.processor.view;
+import java.awt.Color;
+import java.awt.FlowLayout;
 import java.awt.Menu;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.net.URL;
 
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
+import javax.swing.border.CompoundBorder;
+import javax.swing.border.EmptyBorder;
+import javax.swing.border.LineBorder;
 import javax.swing.event.MenuEvent;
 import javax.swing.event.MenuListener;
 
@@ -27,10 +35,20 @@ public class MainFrame extends  JFrame implements ActionListener, MenuListener{
 	
 	private MainFrame() throws  Exception{
 		// TODO Auto-generated constructor stub
-		setSize(1200,600);
+		setSize(1200,800);
 		setLayout(null);
 		setTitle("Druv Processor Utility");
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		
+		JPanel statusBar = new JPanel(new FlowLayout(FlowLayout.LEFT));
+	    final JLabel status = new JLabel("Version :  2.0.1, 26-Apr-2019");
+	    statusBar.add(status);
+	    statusBar.setBounds(0,700, 1200, 50);
+	    add(statusBar);
+	    
+		// iconURL is null when not found
+		ImageIcon icon = new ImageIcon("images/logo.png");
+		setIconImage(icon.getImage());
 		menuHome.addMenuListener(this);
 		
 		menuRun.addMenuListener(this);
@@ -61,7 +79,7 @@ public class MainFrame extends  JFrame implements ActionListener, MenuListener{
 		if(content!=null)
 			remove(content);
 		content = panel;
-		content.setBounds(20,20, 1160, 700);
+		content.setBounds(20,20, 1160, 750);
 		add(content);
 		repaint();
 		
