@@ -47,8 +47,15 @@ public class MainFrame extends  JFrame implements ActionListener, MenuListener{
 	    add(statusBar);
 	    
 		// iconURL is null when not found
-		ImageIcon icon = new ImageIcon("images/logo.png");
+	    
+	    URL iconURL = getClass().getResource("/images/logo.png");
+		// iconURL is null when not found
+		ImageIcon icon = new ImageIcon(iconURL);
 		setIconImage(icon.getImage());
+	    
+		/*ImageIcon icon = new ImageIcon("images\\logo.png");
+		setIconImage(icon.getImage());
+		*/
 		menuHome.addMenuListener(this);
 		
 		menuRun.addMenuListener(this);
