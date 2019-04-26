@@ -730,8 +730,9 @@ public class DruvProcessor {
 		firstNeg = first == 'X' ? selectedMVF1.getNeg_mvx()
 				: (first == 'Y' ? selectedMVF1.getNeg_mvy() : selectedMVF1.getNeg_mvz());
 
-		double next1, next2, nextStep1 = round(firstOrigin + firstPos), nextStep2 = round(secondOrigin + secondPos);
-		if (firstPos <= secondPos) {
+		/* TDL : Commented out to cimplyfy the interpolations 
+			double next1, next2, nextStep1 = round(firstOrigin + firstPos), nextStep2 = round(secondOrigin + secondPos);
+		    if (firstPos <= secondPos) {
 			// know x, calculate y
 			next1 = round(firstOrigin + firstPos); // we have x2			
 					
@@ -786,6 +787,73 @@ public class DruvProcessor {
 				next2 = round(next2 + secondPos); // get nextX2
 			} while (next2 <= secondDest);
 		}
+*/		
+		
+		/**
+		 * Logic for interpolation 
+		 * We have the following values with us 
+		 * a. (firstOrigin,secondOrigin) -> (firstDest,SecondDest)
+		 * b. slope : 
+		 * c. firstPos,firstNeg : positive and negative min values for first axis
+		 * d. secondPos,secondNeg : positive and negative min values for second axis
+		 */
+		
+		Point source = new Point(firstOrigin,secondOrigin);
+		Point dest = new Point(firstDest,secondDest);
+		ArrayList<Point> allPoints = new ArrayList<Point>();
+		ArrayList<Point> selectedPoints = new ArrayList<Point>();
+		allPoints.add(source);
+		// polulate all points using // y2 = m(x2-x1) + y1 with 0.001 increment on x 
+		double increment = 0.25;
+		
+		if(dest.x-source.x<0) // we are moving to left ( e.g from 5 to 2 OR from -10  to -11... so next incremental value has to be greater than dest
+		{
+			increment = increment*-1;
+			for(double d = source.x; d>=dest.x;d+=increment)
+				allPoints.add(new Point(d, slope * (d - firstOrigin) + secondOrigin));
+		}
+		else
+			for(double d = source.x; d<=dest.x;d+=increment)
+				allPoints.add(new Point(d, slope * (d - firstOrigin) + secondOrigin));
+		
+		allPoints.add(dest);
+		
+		// now iterate through arrayList and select only those points that fit within the MV
+		if(allPoints.size()>0)
+		{
+			
+			Point prev = allPoints.get(0);
+			for(int i=1;i<allPoints.size();i++)
+			{
+				
+				Point next = allPoints.get(i);
+				boolean rejected = false; // set this boolean to true if next point should not be written because it has distance 
+				
+				if(next.x-prev.x<0 && Math.abs(next.x-prev.x) < firstNeg)
+					rejected = true; // ( next.x-prev.x negative means you are moving to left, neg MV should be considered. reject if diff is less than minMV
+				if(next.x-prev.x>=0 && Math.abs(next.x-prev.x) < firstPos)
+					rejected = true; // ( next.x-prev.x positive means you are moving to right , pos MV should be considered. reject if diff is less than minMV
+				if(next.y-prev.y<0 && Math.abs(next.y-prev.y) < secondNeg)
+					rejected = true; // ( next.x-prev.x negative means you are moving to left, neg MV should be considered. reject if diff is less than minMV
+				if(next.y-prev.y>=0 && Math.abs(next.y-prev.y) < secondPos)
+					rejected = true; // ( next.x-prev.x positive means you are moving to right , pos MV should be considered. reject if diff is less than minMV
+							
+				if(!rejected)
+				{
+					if (next.x < 0)
+						formatG1(first, '-', next.x);
+					else
+						formatG1(first, '+', next.x);
+					if (next.y < 0)
+						formatG1(second, '-', next.y);
+					else
+						formatG1(second, '+', next.y);
+					prev = next; // assign written point to prev so that next comparison will be done referring to it 
+				}
+			}
+		}
+		
+		
 		format("WTF" + first, '+', 0);
 		format("WTF" + second, '+', 0);
 

@@ -6,8 +6,8 @@ public class Point {
     public final double x, y;
 
     public Point(Double x, Double y) {
-        this.x = ((long) (x < 0 ? x * 100 - 0.5 : x * 100 + 0.5)) / 100.0;
-        this.y = ((long) (y < 0 ? y * 100 - 0.5 : y * 100 + 0.5)) / 100.0;
+        this.x = ((long) (x < 0 ? x * 1000 - 0.5 : x * 1000 + 0.5)) / 1000.0;
+        this.y = ((long) (y < 0 ? y * 1000 - 0.5 : y * 1000 + 0.5)) / 1000.0;
         
     }
 
