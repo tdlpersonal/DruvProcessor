@@ -18,6 +18,8 @@ public class Constants {
 	public final static int Z_X_Y = 14;
 	public final static int Z_Y_X = 15;
 	
+	public final static int max_line_count = 180;
+	
 	
 	
 	

@@ -6,6 +6,8 @@ import java.io.FileWriter;
 
 import javax.swing.JOptionPane;
 
+import com.bridgeit.druv.processor.utils.Constants;
+
 public class DruvFileGenerator {
 	
 	private static String basePath=null;
@@ -21,7 +23,7 @@ public class DruvFileGenerator {
 	
 	public void WriteLine(String str) throws Exception
 	{
-		if(writer==null || currentLineCount==199)
+		if(writer==null || currentLineCount==Constants.max_line_count-1)
 		{
 			createFile();
 		}
