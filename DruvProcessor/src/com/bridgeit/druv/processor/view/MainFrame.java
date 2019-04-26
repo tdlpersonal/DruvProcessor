@@ -37,7 +37,7 @@ public class MainFrame extends  JFrame implements ActionListener, MenuListener{
 		// TODO Auto-generated constructor stub
 		setSize(1200,800);
 		setLayout(null);
-		setTitle("Druv Processor Utility");
+		setTitle("Dhruv Processor Utility");
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		
 		JPanel statusBar = new JPanel(new FlowLayout(FlowLayout.LEFT));
