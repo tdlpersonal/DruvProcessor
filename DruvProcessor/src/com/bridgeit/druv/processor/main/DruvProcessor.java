@@ -804,7 +804,7 @@ public class DruvProcessor {
 		ArrayList<Point> selectedPoints = new ArrayList<Point>();
 		allPoints.add(source);
 		// polulate all points using // y2 = m(x2-x1) + y1 with 0.001 increment on x 
-		double increment = 0.25;
+		double increment = 0.001;
 		
 		if(dest.x-source.x<0) // we are moving to left ( e.g from 5 to 2 OR from -10  to -11... so next incremental value has to be greater than dest
 		{
