@@ -44,6 +44,11 @@ public class DruvProcessor {
 	HashMap<Double, FreqMinValue> mapMV;
 	double currentG1Feed = -1;
 	DecimalFormat df = new DecimalFormat("#####.###");
+	
+	private double formatValue(double x)
+	{
+		return (((long) (x < 0 ? x * 10000 : x * 10000 )) / 10000.0);
+	}
 
 	public static void main(String[] args) throws ParseException {
 
@@ -805,16 +810,18 @@ public class DruvProcessor {
 		allPoints.add(source);
 		// polulate all points using // y2 = m(x2-x1) + y1 with 0.001 increment on x 
 		double increment = 0.001;
+		//double increment = 0.5;
+		
 		
 		if(dest.x-source.x<0) // we are moving to left ( e.g from 5 to 2 OR from -10  to -11... so next incremental value has to be greater than dest
 		{
 			increment = increment*-1;
 			for(double d = source.x; d>=dest.x;d+=increment)
-				allPoints.add(new Point(d, slope * (d - firstOrigin) + secondOrigin));
+				allPoints.add(new Point(d, formatValue(slope * (d - firstOrigin) + secondOrigin)));
 		}
 		else
 			for(double d = source.x; d<=dest.x;d+=increment)
-				allPoints.add(new Point(d, slope * (d - firstOrigin) + secondOrigin));
+				allPoints.add(new Point(d, formatValue(slope * (d - firstOrigin) + secondOrigin)));
 		
 		allPoints.add(dest);
 		
@@ -827,19 +834,27 @@ public class DruvProcessor {
 			{
 				
 				Point next = allPoints.get(i);
+				if(i>allPoints.size()-2)
+				{
+					System.out.println(prev+"::"+next);
+				}
 				boolean rejected = false; // set this boolean to true if next point should not be written because it has distance 
 				
-				if(next.x-prev.x<0 && Math.abs(next.x-prev.x) < firstNeg)
+				if(next.x-prev.x<0 && Math.abs(next.x-prev.x+0.0001)< firstNeg)
 					rejected = true; // ( next.x-prev.x negative means you are moving to left, neg MV should be considered. reject if diff is less than minMV
-				if(next.x-prev.x>=0 && Math.abs(next.x-prev.x) < firstPos)
+				if(next.x-prev.x>=0 && Math.abs(next.x-prev.x+0.0001) < firstPos)
 					rejected = true; // ( next.x-prev.x positive means you are moving to right , pos MV should be considered. reject if diff is less than minMV
-				if(next.y-prev.y<0 && Math.abs(next.y-prev.y) < secondNeg)
-					rejected = true; // ( next.x-prev.x negative means you are moving to left, neg MV should be considered. reject if diff is less than minMV
-				if(next.y-prev.y>=0 && Math.abs(next.y-prev.y) < secondPos)
+				if(next.y-prev.y<0 && Math.abs(next.y-prev.y+0.0001)< secondNeg)
+					rejected = true; // ( next.x-prev.x negative means you are moving to left, neg MV should be considered. reject if diff is less than minMVd
+				if(next.y-prev.y>=0 && Math.abs(next.y-prev.y+0.0001) < secondPos)
 					rejected = true; // ( next.x-prev.x positive means you are moving to right , pos MV should be considered. reject if diff is less than minMV
-							
+				
+				//System.out.println(rejected +"::::"+prev + ":::" + next + ":::" + (next.x-prev.x)*10000.0/10000.0 + "::::" + (next.y-prev.y)*10000.0/10000.0 + ":::" +  Math.abs(next.x-prev.x+0.0001) + "::::" + Math.abs(next.y-prev.y+0.0001));
+				
 				if(!rejected)
 				{
+					//System.out.println("Selected : " + next);
+					
 					if (next.x < 0)
 						formatG1(first, '-', next.x);
 					else

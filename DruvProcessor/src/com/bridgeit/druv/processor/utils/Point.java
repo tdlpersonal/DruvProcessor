@@ -6,9 +6,10 @@ public class Point {
     public final double x, y;
 
     public Point(Double x, Double y) {
-        this.x = ((long) (x < 0 ? x * 1000 - 0.5 : x * 1000 + 0.5)) / 1000.0;
-        this.y = ((long) (y < 0 ? y * 1000 - 0.5 : y * 1000 + 0.5)) / 1000.0;
-        
+    	
+    	this.x = ((long)(x*1000))/1000.0;
+    	this.y = ((long)(y*1000))/1000.0;
+    	
     }
 
     public double distanceFrom(Point other) {
@@ -27,6 +28,6 @@ public class Point {
 
     @Override
     public String toString() {
-        return String.format("(%.4f, %.4f)", x, y);
+        return String.format("(%.5f, %.5f)", x, y);
     }
 }

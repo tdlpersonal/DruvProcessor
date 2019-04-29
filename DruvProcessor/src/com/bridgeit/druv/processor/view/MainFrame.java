@@ -6,6 +6,8 @@ import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.net.URL;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
@@ -21,7 +23,6 @@ import javax.swing.event.MenuEvent;
 import javax.swing.event.MenuListener;
 
 import com.bridgeit.druv.processor.main.DruvProcessor;
-
 public class MainFrame extends  JFrame implements ActionListener, MenuListener{
 	
 	private JMenuBar menuBar = new JMenuBar();
@@ -92,8 +93,12 @@ public class MainFrame extends  JFrame implements ActionListener, MenuListener{
 		
 	}
 	
+	
+	
+	
 	public static void main(String[] args) throws Exception{
-		new MainFrame();
+	new MainFrame();
+			
 	}
 	@Override
 	public void actionPerformed(ActionEvent ae){
