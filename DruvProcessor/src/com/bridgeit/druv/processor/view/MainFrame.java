@@ -42,7 +42,7 @@ public class MainFrame extends  JFrame implements ActionListener, MenuListener{
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		
 		JPanel statusBar = new JPanel(new FlowLayout(FlowLayout.LEFT));
-	    final JLabel status = new JLabel("Version :  2.0.4, 27-Apr-2019");
+	    final JLabel status = new JLabel("Version :  2.0.5, 29-Apr-2019");
 	    statusBar.add(status);
 	    statusBar.setBounds(0,700, 1200, 50);
 	    add(statusBar);
