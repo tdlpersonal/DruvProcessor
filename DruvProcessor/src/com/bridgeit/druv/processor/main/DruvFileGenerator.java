@@ -98,9 +98,9 @@ public class DruvFileGenerator {
 		gen.complete();
 		File f = new File(basePath);
 		File[] files = f.listFiles();
-		for (int i = 0; files!=null && i < files.length; i++) {
-			files[i].delete();
-		}
+//		for (int i = 0; files!=null && i < files.length; i++) {
+//			files[i].delete();
+//		}
 		f = new File(basePath);
 		System.out.println("_______________________________________________");
 		
