@@ -1,0 +1,49 @@
+% 
+O1000
+(G18(XZ Plane Selection)
+(G20(Inch co-ordinate)
+G21(Metric co-ordinate)
+G40 (Tool Nose Compensation Cancelled)
+(G41)(Tool Nose Compenstaion LEFT)
+(G42)(Tool Nose Compensation RIGHT)
+(G50)(Max RPM Preset)
+(G52)(Local Co-ordinate System)
+(G53)(Machine Zero Positioning co-ordinate Shift)
+(G54-G59)(Select co-ordinate plane)
+(G96)(CSS Mode)
+G97(Cancel CSS Mode)
+(G98)(Feed Rate per Minute)
+G99(Feed rate per Revolution)
+G00 G28 X3. Z5.
+N1
+G28 
+T0101(Turning Tool) 
+G0X20.Z10.
+M0
+N2
+M04s1400
+G1X0.F0.1
+Z0.
+G1Z10.X20.F0.1
+M05
+(M00)(Program Stop CP)
+(M01)(Program Optional Stop)
+(M08)(Coolant ON)
+(M09)(Coolant OFF)
+(M10)(Open Chuck)
+(M11)(Close Chuck)
+(M12)(Tailstock Quill IN)
+(M13)(Tailstock Quill OUT)
+(M17)(Turret Indexing Forward)
+(M18)(Turret Indexing Reverse)
+(M19)(Spindle Orientation)
+(M21)(Tailstock Forward)
+(M22)(Tailstock Backward)
+(M23)(Thread Gradual Pullout ON)
+(M24)(Thread Gradual Pullout OFF)
+(M41)(Low Gear Selection)
+(M42)(Medium Gear Selection 1)
+(M43)(Medium Gear Selection 2)
+(M44)(High Gear Selection)
+M30
+%

@@ -1,0 +1,16 @@
+% 
+O1000
+G21(Metric co-ordinate)
+G40 (Tool Nose Compensation Cancelled)
+G99(Feed rate per Revolution)
+G00 G28 X3. Z5.
+N1
+G28 
+T0101(Turning Tool) 
+G0X20.Z10.
+M0
+N2
+M04s1400
+G1X0.F0.05
+Z0.
+%
