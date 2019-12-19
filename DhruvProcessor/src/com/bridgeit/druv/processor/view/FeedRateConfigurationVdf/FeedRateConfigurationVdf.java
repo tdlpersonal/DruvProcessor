@@ -5,9 +5,10 @@
  */
 package FeedRateConfigurationVdf;
 
-import CreateMachineConfiguration.CreateMachineConfiguration;
-import SubFrames.AddFeedRatePanel;
+
+import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -18,8 +19,6 @@ import javax.swing.table.DefaultTableModel;
  * @author austere
  */
 public class FeedRateConfigurationVdf extends javax.swing.JFrame {
-    
-    AddFeedRatePanel AddFeedRatePanel = new AddFeedRatePanel();
 
     /**
      * Creates new form FeedRate
@@ -52,16 +51,16 @@ public class FeedRateConfigurationVdf extends javax.swing.JFrame {
         jPanel5 = new javax.swing.JPanel();
         jPanel6 = new javax.swing.JPanel();
         jPanel7 = new javax.swing.JPanel();
+        jLabel5 = new javax.swing.JLabel();
+        jTextField4 = new javax.swing.JTextField();
         jPanel8 = new javax.swing.JPanel();
         jComboBox1 = new javax.swing.JComboBox<>();
         jLabel6 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
         jPanel9 = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
         jButton14 = new javax.swing.JButton();
         FeedRateVdfDelay = new javax.swing.JTextField();
         jButton16 = new javax.swing.JButton();
-        jTextField4 = new javax.swing.JTextField();
         jButton23 = new javax.swing.JButton();
         jButton24 = new javax.swing.JButton();
         jButton20 = new javax.swing.JButton();
@@ -74,6 +73,7 @@ public class FeedRateConfigurationVdf extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setLocation(new java.awt.Point(100, 150));
+        setPreferredSize(new java.awt.Dimension(1150, 420));
         setResizable(false);
         setSize(new java.awt.Dimension(450, 100));
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -86,13 +86,11 @@ public class FeedRateConfigurationVdf extends javax.swing.JFrame {
         });
 
         jPanel1.setBackground(new java.awt.Color(255, 155, 53));
-        jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        jPanel1.setPreferredSize(new java.awt.Dimension(1046, 690));
 
         jPanel2.setBackground(new java.awt.Color(199, 110, 21));
 
         jLabel1.setFont(new java.awt.Font("DejaVu Serif", 1, 15)); // NOI18N
-        jLabel1.setText("Feed Rates Configuration VFD");
+        jLabel1.setText("Feed Rates Configuration VDF");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -176,9 +174,23 @@ public class FeedRateConfigurationVdf extends javax.swing.JFrame {
 
         jPanel7.setBackground(new java.awt.Color(254, 207, 160));
 
+        jLabel5.setText("Feed Rate");
+
+        jTextField4.setText("0");
+        jTextField4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField4ActionPerformed(evt);
+            }
+        });
+        jTextField4.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTextField4KeyReleased(evt);
+            }
+        });
+
         jPanel8.setBackground(new java.awt.Color(254, 207, 160));
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select", "Clutch", "VFD", "Steper", "Servo" }));
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select", "1", "2", "3" }));
         jComboBox1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jComboBox1ActionPerformed(evt);
@@ -187,8 +199,6 @@ public class FeedRateConfigurationVdf extends javax.swing.JFrame {
 
         jLabel6.setText("Frequency (Hz)");
 
-        jLabel5.setText("Feed Rate");
-
         javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
         jPanel8.setLayout(jPanel8Layout);
         jPanel8Layout.setHorizontalGroup(
@@ -196,7 +206,6 @@ public class FeedRateConfigurationVdf extends javax.swing.JFrame {
             .addGroup(jPanel8Layout.createSequentialGroup()
                 .addGap(27, 27, 27)
                 .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel6)
                     .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(53, Short.MAX_VALUE))
@@ -204,13 +213,11 @@ public class FeedRateConfigurationVdf extends javax.swing.JFrame {
         jPanel8Layout.setVerticalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel8Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addContainerGap()
                 .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addContainerGap(24, Short.MAX_VALUE))
         );
 
         jPanel9.setBackground(new java.awt.Color(255, 203, 151));
@@ -233,6 +240,11 @@ public class FeedRateConfigurationVdf extends javax.swing.JFrame {
                 FeedRateVdfDelayActionPerformed(evt);
             }
         });
+        FeedRateVdfDelay.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                FeedRateVdfDelayKeyReleased(evt);
+            }
+        });
 
         jButton16.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icon/icons-plus-20.png"))); // NOI18N
         jButton16.setMaximumSize(new java.awt.Dimension(18, 29));
@@ -244,12 +256,6 @@ public class FeedRateConfigurationVdf extends javax.swing.JFrame {
             }
         });
 
-        jTextField4.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField4ActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
         jPanel9.setLayout(jPanel9Layout);
         jPanel9Layout.setHorizontalGroup(
@@ -257,28 +263,26 @@ public class FeedRateConfigurationVdf extends javax.swing.JFrame {
             .addGroup(jPanel9Layout.createSequentialGroup()
                 .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel9Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel9Layout.createSequentialGroup()
                         .addComponent(jButton14, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(FeedRateVdfDelay, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton16, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 72, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jButton16, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(0, 35, Short.MAX_VALUE))
         );
         jPanel9Layout.setVerticalGroup(
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel9Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton14, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(FeedRateVdfDelay, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton16, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(16, Short.MAX_VALUE))
+                .addContainerGap(22, Short.MAX_VALUE))
         );
 
         jButton23.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icon/icons-save--20.png"))); // NOI18N
@@ -307,10 +311,17 @@ public class FeedRateConfigurationVdf extends javax.swing.JFrame {
         jPanel7Layout.setHorizontalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel7Layout.createSequentialGroup()
-                .addGap(24, 24, 24)
-                .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel7Layout.createSequentialGroup()
+                        .addGap(24, 24, 24)
+                        .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel7Layout.createSequentialGroup()
+                        .addGap(49, 49, 49)
+                        .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(111, 111, 111)
+                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jButton23)
                 .addGap(39, 39, 39)
@@ -324,18 +335,25 @@ public class FeedRateConfigurationVdf extends javax.swing.JFrame {
             .addGroup(jPanel7Layout.createSequentialGroup()
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel7Layout.createSequentialGroup()
-                        .addGap(21, 21, 21)
-                        .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jButton24)
-                            .addComponent(jButton23)
-                            .addComponent(jButton20))
+                        .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel7Layout.createSequentialGroup()
+                                .addGap(21, 21, 21)
+                                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jButton24)
+                                    .addComponent(jButton23)
+                                    .addComponent(jButton20)))
+                            .addGroup(jPanel7Layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jPanel8, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel7Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
-            .addGroup(jPanel7Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
@@ -414,23 +432,22 @@ public class FeedRateConfigurationVdf extends javax.swing.JFrame {
                 .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel10Layout.createSequentialGroup()
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel10Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel10Layout.setVerticalGroup(
             jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel10Layout.createSequentialGroup()
                 .addGap(24, 24, 24)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(35, 35, 35)
-                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(33, 33, 33)
-                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(52, 52, 52)
+                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(20, 20, 20))
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -458,21 +475,21 @@ public class FeedRateConfigurationVdf extends javax.swing.JFrame {
                         .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, 0)
                         .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jPanel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(91, Short.MAX_VALUE))
+                .addContainerGap(24, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 1074, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 483, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
@@ -500,10 +517,9 @@ public class FeedRateConfigurationVdf extends javax.swing.JFrame {
         String Frequency = model.getValueAt(index, 4).toString();
         String Delay = model.getValueAt(index, 5).toString();
         jTextField4.setText(FeedRate);
-        
+
         jComboBox1.getSelectedItem().toString();
         FeedRateVdfDelay.setText(Delay);
-        jComboBox1.setSelectedItem(Frequency);
         jTextField1.setText(MachineName);
         jTextField2.setText(Drivetype);
         jTextField3.setText(Axis);
@@ -512,22 +528,60 @@ public class FeedRateConfigurationVdf extends javax.swing.JFrame {
 
     private void jButton20ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton20ActionPerformed
         // TODO add your handling code here:
-        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
-        String s = jTextField1.getText();
-        if (s.isEmpty()) {
-            
-        } else {
-            model.removeRow(TableIndex);
-            
-            System.err.println("Removed Row " + TableIndex);
-            
-        }
-        jTextField1.setText(null);
-        jTextField2.setText(null);
-        jTextField3.setText(null);
-        jTextField4.setText(null);
-        jComboBox1.setSelectedIndex(0);
+//        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+//        model.removeRow(TableIndex);
+//        System.err.println("Removed Row " + TableIndex);
+   DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        int index = jTable1.getSelectedRow();
+//        System.err.println(index);
+//        System.err.println(TableIndex);
+         
+        if(index != -1){
+        if (index >= 0) {
+            JFrame f = new JFrame("Error");
+            JPanel p = new JPanel();
+            JLabel l = null;
+
+            String machinename = jTextField1.getText();
+            if (machinename.isEmpty()) {
+                l = new JLabel("Please select record ");
+                p.add(l);
+                f.add(p);
+                l.setHorizontalAlignment(JLabel.CENTER);
+                l.setVerticalAlignment(JLabel.CENTER);
+                l.setPreferredSize(new Dimension(250, 50));
+                l.setFont(new Font("DIALOG_INPUT", Font.PLAIN, 14));
+                f.setBounds(350, 350, 600, 100);
+                l.setForeground(Color.red);
+                f.show();
+                                               
+            } else {
+                model.removeRow(TableIndex);
+                System.err.println("Removed Row " + TableIndex);
+            }
+          
+            jTextField4.setText("0");
+            jComboBox1.setSelectedIndex(0);
+
+    }
+        } else{
         
+              JFrame f = new JFrame("Error");
+            JPanel p = new JPanel();
+            JLabel l = null;
+           l = new JLabel("Please select or insert record ");
+                p.add(l);
+                f.add(p);
+                l.setHorizontalAlignment(JLabel.CENTER);
+                l.setVerticalAlignment(JLabel.CENTER);
+                l.setPreferredSize(new Dimension(250, 50));
+                l.setFont(new Font("DIALOG_INPUT", Font.PLAIN, 14));
+                f.setBounds(350, 350, 600, 100);
+                l.setForeground(Color.red);
+                f.show();
+        
+        }
+
     }//GEN-LAST:event_jButton20ActionPerformed
 
     private void jButton24ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton24ActionPerformed
@@ -547,11 +601,28 @@ public class FeedRateConfigurationVdf extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton23ActionPerformed
 
     private void jButton16ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton16ActionPerformed
-        if (!FeedRateVdfDelay.getText().isEmpty()) {
-            int StopDelay = Integer.parseInt(FeedRateVdfDelay.getText());
-            StopDelay = StopDelay + 1;
+        if(!FeedRateVdfDelay.getText().isEmpty()){
+            int StopDelay= Integer.parseInt(FeedRateVdfDelay.getText());
+               if(StopDelay <= 9998){
+            StopDelay =  StopDelay + 1;
             FeedRateVdfDelay.setText(Integer.toString(StopDelay));
-        } else {
+               }else{
+                JFrame f = new JFrame("Error");
+            JPanel p = new JPanel();
+            JLabel l = null; 
+            l = new JLabel("Delay should be less than 9999 ");
+            p.add(l);
+            f.add(p);
+            l.setHorizontalAlignment(JLabel.CENTER);
+            l.setVerticalAlignment(JLabel.CENTER);
+            l.setPreferredSize(new Dimension(250, 50));
+            l.setFont(new Font("DIALOG_INPUT", Font.PLAIN, 14));
+            f.setBounds(350, 350, 600, 100);
+            l.setForeground(Color.red);
+            f.show();
+               
+               }
+        }else{
             FeedRateVdfDelay.setText(Integer.toString(0));
         }
     }//GEN-LAST:event_jButton16ActionPerformed
@@ -561,16 +632,12 @@ public class FeedRateConfigurationVdf extends javax.swing.JFrame {
     }//GEN-LAST:event_FeedRateVdfDelayActionPerformed
 
     private void jButton14ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton14ActionPerformed
-        if (!FeedRateVdfDelay.getText().isEmpty()) {
-            
-            int StopDelay = Integer.parseInt((String) FeedRateVdfDelay.getText());
-            if (StopDelay > 0) {
-                StopDelay = StopDelay - 1;
-                FeedRateVdfDelay.setText(Integer.toString(StopDelay));
-            }
-            
-        } else {
-            
+        if(!FeedRateVdfDelay.getText().isEmpty()){
+            int StopDelay= Integer.parseInt(FeedRateVdfDelay.getText());
+            StopDelay =  StopDelay - 1;
+            FeedRateVdfDelay.setText(Integer.toString(StopDelay));
+        }
+        else{
             FeedRateVdfDelay.setText(Integer.toString(0));
         }
     }//GEN-LAST:event_jButton14ActionPerformed
@@ -588,8 +655,8 @@ public class FeedRateConfigurationVdf extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        
-          this.setVisible(false);
+
+         this.setVisible(false);
 
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -604,12 +671,38 @@ public class FeedRateConfigurationVdf extends javax.swing.JFrame {
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField1ActionPerformed
-    
+
+    private void jTextField4KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField4KeyReleased
+        // TODO add your handling code here:
+         int key = evt.getKeyCode();
+            System.err.println(key);
+            if ((key >= 48 && key <= 57) || (key >= 96 && key <=105) || (key == 46) || (key == 8)) {
+               jTextField4.setText(jTextField4.getText());
+              } else {
+               jTextField4.setText("0");
+
+              }
+        
+    }//GEN-LAST:event_jTextField4KeyReleased
+
+    private void FeedRateVdfDelayKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_FeedRateVdfDelayKeyReleased
+        // TODO add your handling code here:
+            int key = evt.getKeyCode();
+            System.err.println(key);
+            if ((key >= 48 && key <= 57) || (key >= 96 && key <=105) || (key == 46) || (key == 8) || (key == 190)) {
+               FeedRateVdfDelay.setText(FeedRateVdfDelay.getText());
+              } else {
+               FeedRateVdfDelay.setText("0");
+
+              }
+        
+    }//GEN-LAST:event_FeedRateVdfDelayKeyReleased
+
     private boolean newTask() {
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
-        JFrame f = new JFrame("Error");
-        JPanel p = new JPanel();
-        JLabel l = null;
+            JFrame f = new JFrame("Error");
+            JPanel p = new JPanel();
+            JLabel l = null;
         String FeedRate = jTextField4.getText();
         String Frequency1 = jComboBox1.getSelectedItem().toString();
         String Delay1 = FeedRateVdfDelay.getText();
@@ -617,74 +710,26 @@ public class FeedRateConfigurationVdf extends javax.swing.JFrame {
         String DriveType = jTextField2.getText();
         String Axis = jTextField3.getText();
         
-        if (MachineName.isEmpty() || DriveType.isEmpty() || Axis.isEmpty() || FeedRate.isEmpty() || jComboBox1.getSelectedIndex() == 0 || Delay1.isEmpty()) {
-            
-            if (MachineName.isEmpty()) {
-                l = new JLabel("MachineName Empty");
-                p.add(l);
-                f.add(p);
-                f.setLocation(400, 350);
-                f.setSize(800, 100);
-                f.show();
-                return false;
-            }
-            if (DriveType.isEmpty()) {
-                l = new JLabel("DriveType Empty");
-                p.add(l);
-                f.add(p);
-                f.setLocation(400, 350);
-                f.setSize(800, 100);
-                f.show();
-                return false;
-            }
-            if (Axis.isEmpty()) {
-                l = new JLabel("Axis Empty");
-                p.add(l);
-                f.add(p);
-                f.setLocation(400, 350);
-                f.setSize(800, 100);
-                f.show();
-                return false;
-            }
-            if (FeedRate.isEmpty()) {
-                l = new JLabel("FeedRate Empty");
-                p.add(l);
-                f.add(p);
-                f.setLocation(400, 350);
-                f.setSize(800, 100);
-                f.show();
-                return false;
-            }
-            if (jComboBox1.getSelectedIndex() == 0) {
-                l = new JLabel("Frequency (Hz)  Empty");
-                p.add(l);
-                f.add(p);
-                f.setLocation(400, 350);
-                f.setSize(800, 100);
-                f.show();
-                return false;
-            }
-            if (Delay1.isEmpty()) {
-                l = new JLabel("Delay Empty");
-                p.add(l);
-                f.add(p);
-                f.setLocation(400, 350);
-                f.setSize(800, 100);
-                f.show();
-                return false;
-            }
-            
+          if (MachineName.isEmpty() || DriveType.isEmpty() || Axis.isEmpty() || FeedRate.isEmpty() || Frequency1.isEmpty() || Delay1.isEmpty()) {
+          
+          if( MachineName.isEmpty()){ l = new JLabel("MachineName Empty"); p.add(l); f.add(p);f.setLocation(400, 350);f.setSize(800, 100); f.show(); return false;}
+          if( DriveType.isEmpty()){  l = new JLabel("DriveType Empty"); p.add(l); f.add(p);f.setLocation(400, 350);f.setSize(800, 100); f.show(); return false;} 
+          if( Axis.isEmpty()){  l = new JLabel("Axis Empty"); p.add(l); f.add(p);f.setLocation(400, 350);f.setSize(800, 100); f.show(); return false;}
+          if( FeedRate.isEmpty()){  l = new JLabel("FeedRate Empty"); p.add(l); f.add(p);f.setLocation(400, 350);f.setSize(800, 100); f.show(); return false;} 
+          if( Frequency1.isEmpty()){  l = new JLabel("Frequency1 Empty"); p.add(l); f.add(p);f.setLocation(400, 350);f.setSize(800, 100); f.show(); return false;}
+          if( Delay1.isEmpty()){  l = new JLabel("Delay Empty"); p.add(l); f.add(p);f.setLocation(400, 350);f.setSize(800, 100); f.show(); return false;} 
+           
+           
         } else {
-            
+
             model.addRow(new Object[]{MachineName, DriveType, Axis, FeedRate, Frequency1, Delay1});
             System.err.println("new Task");
-            jTextField4.setText("");
-            FeedRateVdfDelay.setText("");
-            jTextField1.setText("");
-            jTextField2.setText("");
-            jComboBox1.setSelectedItem("");
-            jTextField3.setText("");
-            
+            jTextField4.setText("0");
+            FeedRateVdfDelay.setText("0");
+//            jTextField1.setText("");
+//            jTextField2.setText("");
+//            jTextField3.setText("");
+
         }
         return true;
     }
@@ -723,7 +768,7 @@ public class FeedRateConfigurationVdf extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new FeedRateConfigurationVdf().setVisible(true);
-                
+
             }
         });
     }

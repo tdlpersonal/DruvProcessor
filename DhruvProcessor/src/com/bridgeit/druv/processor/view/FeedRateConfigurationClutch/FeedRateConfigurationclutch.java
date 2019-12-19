@@ -5,10 +5,11 @@
  */
 package FeedRateConfigurationClutch;
 
-import CreateMachineConfiguration.CreateMachineConfiguration;
+import CreateMachine.CreateMachine;
 import EditDeleteMachines.EditDeleteMachines;
-import SubFrames.AddFeedRatePanel;
+import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -56,22 +57,19 @@ public class FeedRateConfigurationclutch extends javax.swing.JFrame {
         jPanel14 = new javax.swing.JPanel();
         jButton22 = new javax.swing.JButton();
         jPanel7 = new javax.swing.JPanel();
+        jLabel5 = new javax.swing.JLabel();
+        jTextField4 = new javax.swing.JTextField();
         jPanel8 = new javax.swing.JPanel();
         jComboBox1 = new javax.swing.JComboBox<>();
         jLabel6 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
         jPanel9 = new javax.swing.JPanel();
-        jLabel7 = new javax.swing.JLabel();
-        jButton14 = new javax.swing.JButton();
-        FeedRateDelay = new javax.swing.JTextField();
-        jButton16 = new javax.swing.JButton();
-        jTextField4 = new javax.swing.JTextField();
         jButton23 = new javax.swing.JButton();
         jButton24 = new javax.swing.JButton();
         jButton20 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setLocation(new java.awt.Point(100, 150));
+        setPreferredSize(new java.awt.Dimension(1200, 500));
         setResizable(false);
         setSize(new java.awt.Dimension(450, 100));
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -81,7 +79,6 @@ public class FeedRateConfigurationclutch extends javax.swing.JFrame {
         });
 
         jPanel1.setBackground(new java.awt.Color(255, 155, 53));
-        jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         jPanel2.setBackground(new java.awt.Color(199, 110, 21));
 
@@ -119,7 +116,7 @@ public class FeedRateConfigurationclutch extends javax.swing.JFrame {
         jLabel3.setText("Drive Type");
 
         jTextField2.setEditable(false);
-        jTextField2.setText("Clutch");
+        jTextField2.setText(" VFD");
         jTextField2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField2ActionPerformed(evt);
@@ -149,11 +146,11 @@ public class FeedRateConfigurationclutch extends javax.swing.JFrame {
                 .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(32, 32, 32)
-                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(70, 70, 70)
+                .addComponent(jLabel4)
+                .addGap(18, 18, 18)
                 .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(42, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -223,11 +220,11 @@ public class FeedRateConfigurationclutch extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Machine Name", "Drive Type", "Axis", "Feed Rate", "Frequency(Hz)", "Delay(ms)"
+                "Machine Name", "Drive Type", "Axis", "Feed Rate", "Frequency(Hz)"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, true, false, false, false
+                false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -281,9 +278,23 @@ public class FeedRateConfigurationclutch extends javax.swing.JFrame {
 
         jPanel7.setBackground(new java.awt.Color(254, 207, 160));
 
+        jLabel5.setText("Feed Rate");
+
+        jTextField4.setText("0");
+        jTextField4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField4ActionPerformed(evt);
+            }
+        });
+        jTextField4.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTextField4KeyReleased(evt);
+            }
+        });
+
         jPanel8.setBackground(new java.awt.Color(254, 207, 160));
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select", "Clutch", "VFD", "Steper", "Servo" }));
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select", "1", "2", "3" }));
         jComboBox1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jComboBox1ActionPerformed(evt);
@@ -292,8 +303,6 @@ public class FeedRateConfigurationclutch extends javax.swing.JFrame {
 
         jLabel6.setText("Frequency (Hz)");
 
-        jLabel5.setText("Feed Rate");
-
         javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
         jPanel8.setLayout(jPanel8Layout);
         jPanel8Layout.setHorizontalGroup(
@@ -301,7 +310,6 @@ public class FeedRateConfigurationclutch extends javax.swing.JFrame {
             .addGroup(jPanel8Layout.createSequentialGroup()
                 .addGap(27, 27, 27)
                 .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel6)
                     .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(53, Short.MAX_VALUE))
@@ -310,8 +318,6 @@ public class FeedRateConfigurationclutch extends javax.swing.JFrame {
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel8Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -320,70 +326,15 @@ public class FeedRateConfigurationclutch extends javax.swing.JFrame {
 
         jPanel9.setBackground(new java.awt.Color(255, 203, 151));
 
-        jLabel7.setText("Delay (ms)");
-
-        jButton14.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icon/icons-minus-20.png"))); // NOI18N
-        jButton14.setMaximumSize(new java.awt.Dimension(25, 29));
-        jButton14.setMinimumSize(new java.awt.Dimension(25, 29));
-        jButton14.setPreferredSize(new java.awt.Dimension(20, 29));
-        jButton14.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton14ActionPerformed(evt);
-            }
-        });
-
-        FeedRateDelay.setText("0");
-        FeedRateDelay.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                FeedRateDelayActionPerformed(evt);
-            }
-        });
-
-        jButton16.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icon/icons-plus-20.png"))); // NOI18N
-        jButton16.setMaximumSize(new java.awt.Dimension(18, 29));
-        jButton16.setMinimumSize(new java.awt.Dimension(18, 29));
-        jButton16.setPreferredSize(new java.awt.Dimension(18, 29));
-        jButton16.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton16ActionPerformed(evt);
-            }
-        });
-
-        jTextField4.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField4ActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
         jPanel9.setLayout(jPanel9Layout);
         jPanel9Layout.setHorizontalGroup(
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel9Layout.createSequentialGroup()
-                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel9Layout.createSequentialGroup()
-                        .addComponent(jButton14, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(FeedRateDelay, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton16, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 70, Short.MAX_VALUE))
+            .addGap(0, 199, Short.MAX_VALUE)
         );
         jPanel9Layout.setVerticalGroup(
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel9Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jButton14, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(FeedRateDelay, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton16, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(32, Short.MAX_VALUE))
+            .addGap(0, 80, Short.MAX_VALUE)
         );
 
         jButton23.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icon/icons-save--20.png"))); // NOI18N
@@ -412,10 +363,17 @@ public class FeedRateConfigurationclutch extends javax.swing.JFrame {
         jPanel7Layout.setHorizontalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel7Layout.createSequentialGroup()
-                .addGap(26, 26, 26)
-                .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(63, 63, 63)
-                .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel7Layout.createSequentialGroup()
+                        .addGap(24, 24, 24)
+                        .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel7Layout.createSequentialGroup()
+                        .addGap(49, 49, 49)
+                        .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(111, 111, 111)
+                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jButton23)
                 .addGap(39, 39, 39)
@@ -429,9 +387,6 @@ public class FeedRateConfigurationclutch extends javax.swing.JFrame {
             .addGroup(jPanel7Layout.createSequentialGroup()
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel7Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel7Layout.createSequentialGroup()
                         .addGap(21, 21, 21)
                         .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jButton24)
@@ -439,7 +394,13 @@ public class FeedRateConfigurationclutch extends javax.swing.JFrame {
                             .addComponent(jButton20)))
                     .addGroup(jPanel7Layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(16, 16, 16)
+                        .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel7Layout.createSequentialGroup()
+                        .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -496,24 +457,84 @@ public class FeedRateConfigurationclutch extends javax.swing.JFrame {
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
         // TODO add your handling code here:
-        //   new CreateMachineConfiguration().setVisible(true);
+      //   new CreateMachineConfiguration().setVisible(true);
     }//GEN-LAST:event_formWindowClosing
 
     private void jButton20ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton20ActionPerformed
-        // TODO add your handling code here:
+  
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
-    if(jButton20.isSelected())
-    {
-        model.removeRow(TableIndex);
-        System.err.println("Removed Row " + TableIndex);
+        int index = jTable1.getSelectedRow();
+//        System.err.println(index);
+//        System.err.println(TableIndex);
+         
+        if(index != -1){
+        if (index >= 0) {
+            JFrame f = new JFrame("Error");
+            JPanel p = new JPanel();
+            JLabel l = null;
+
+            String machinename = jTextField1.getText();
+            if (machinename.isEmpty()) {
+                l = new JLabel("Please select record ");
+                p.add(l);
+                f.add(p);
+                l.setHorizontalAlignment(JLabel.CENTER);
+                l.setVerticalAlignment(JLabel.CENTER);
+                l.setPreferredSize(new Dimension(250, 50));
+                l.setFont(new Font("DIALOG_INPUT", Font.PLAIN, 14));
+                f.setBounds(350, 350, 600, 100);
+                l.setForeground(Color.red);
+                f.show();
+                                               
+            } else {
+                model.removeRow(TableIndex);
+                System.err.println("Removed Row " + TableIndex);
+            }
+          
+            jTextField4.setText("0");
+            jComboBox1.setSelectedIndex(0);
+
     }
+        } else{
+        
+              JFrame f = new JFrame("Error");
+            JPanel p = new JPanel();
+            JLabel l = null;
+           l = new JLabel("Please select or insert record ");
+                p.add(l);
+                f.add(p);
+                l.setHorizontalAlignment(JLabel.CENTER);
+                l.setVerticalAlignment(JLabel.CENTER);
+                l.setPreferredSize(new Dimension(250, 50));
+                l.setFont(new Font("DIALOG_INPUT", Font.PLAIN, 14));
+                f.setBounds(350, 350, 600, 100);
+                l.setForeground(Color.red);
+                f.show();
+        
+        }
     }//GEN-LAST:event_jButton20ActionPerformed
 
+    private boolean validator(){
+      
+          System.err.println(TableIndex);
+        if(TableIndex == 0){
+        
+        return false;
+        }else{
+         return false;
+        }
+        
+       
+    
+    
+   
+    }
+    
     private void jButton24ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton24ActionPerformed
         // TODO add your handling code here:
 
         jTextField4.setText("");
-        FeedRateDelay.setText("");
+       // FeedRateDelay.setText("");
 //        jTextField1.setText("");
 //        jTextField2.setText("");
 //        jTextField3.setText("");
@@ -524,35 +545,6 @@ public class FeedRateConfigurationclutch extends javax.swing.JFrame {
 
         newTask();
     }//GEN-LAST:event_jButton23ActionPerformed
-
-    private void jButton16ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton16ActionPerformed
-        if (!FeedRateDelay.getText().isEmpty()) {
-            int StopDelay = Integer.parseInt(FeedRateDelay.getText());
-            StopDelay = StopDelay + 1;
-            FeedRateDelay.setText(Integer.toString(StopDelay));
-        } else {
-            FeedRateDelay.setText(Integer.toString(0));
-        }
-    }//GEN-LAST:event_jButton16ActionPerformed
-
-    private void FeedRateDelayActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_FeedRateDelayActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_FeedRateDelayActionPerformed
-
-    private void jButton14ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton14ActionPerformed
-        if (!FeedRateDelay.getText().isEmpty()) {
-
-            int StopDelay = Integer.parseInt(FeedRateDelay.getText());
-            if (StopDelay > 0) {
-                StopDelay = StopDelay - 1;
-                FeedRateDelay.setText(Integer.toString(StopDelay));
-            }
-
-        } else {
-
-            FeedRateDelay.setText(Integer.toString(0));
-        }
-    }//GEN-LAST:event_jButton14ActionPerformed
 
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
         // TODO add your handling code here:
@@ -575,22 +567,24 @@ public class FeedRateConfigurationclutch extends javax.swing.JFrame {
         String Drivetype = model.getValueAt(index, 1).toString();
         String Axis = model.getValueAt(index, 2).toString();
         String FeedRate = model.getValueAt(index, 3).toString();
-        String Frequency = model.getValueAt(index, 4).toString();
-        String Delay = model.getValueAt(index, 5).toString();
+      //  String Frequency = model.getValueAt(index, 4).toString();
         jTextField4.setText(FeedRate);
 
         jComboBox1.getSelectedItem().toString();
-        FeedRateDelay.setText(Delay);
+    //    FeedRateDelay.setText(Delay);
         jTextField1.setText(MachineName);
         jTextField2.setText(Drivetype);
         jTextField3.setText(Axis);
         TableIndex = index;
+
+       
+
     }//GEN-LAST:event_jTable1MouseClicked
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
         this.setVisible(false);
-        new CreateMachineConfiguration().setVisible(true);
+       new CreateMachine().setVisible(true);
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -600,7 +594,7 @@ public class FeedRateConfigurationclutch extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         this.setVisible(false);
-       // new EditDeleteMachines().setVisible(true);
+        new EditDeleteMachines().setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jTextField3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField3ActionPerformed
@@ -614,91 +608,53 @@ public class FeedRateConfigurationclutch extends javax.swing.JFrame {
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField1ActionPerformed
-    private boolean newTask() {
+
+    private void jTextField4KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField4KeyReleased
+        // TODO add your handling code here:
+        
+          int key = evt.getKeyCode();
+
+        if ((key >= 48 && key <= 57) || (key >= 96 && key <= 105) || (key == 46) || (key == 8)  || (key == 190)) {
+            jTextField4.setText(jTextField4.getText());
+        } else {
+            jTextField4.setText("0");
+
+        }
+    }//GEN-LAST:event_jTextField4KeyReleased
+ private boolean newTask() {
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
-        JFrame f = new JFrame("Error");
-        JPanel p = new JPanel();
-        JLabel l = null;
+          JFrame f = new JFrame("Error");
+            JPanel p = new JPanel();
+            JLabel l = null;
         String FeedRate = jTextField4.getText();
         String Frequency1 = jComboBox1.getSelectedItem().toString();
-        String Delay1 = FeedRateDelay.getText();
+       // String Delay1 = FeedRateDelay.getText();
         String MachineName = jTextField1.getText();
         String DriveType = jTextField2.getText();
         String Axis = jTextField3.getText();
-
-        if (MachineName.isEmpty() || DriveType.isEmpty() || Axis.isEmpty() || FeedRate.isEmpty() || jComboBox1.getSelectedIndex() == 0 || Delay1.isEmpty()) {
-
-            if (MachineName.isEmpty()) {
-                l = new JLabel("MachineName Empty");
-                p.add(l);
-                f.add(p);
-                f.setLocation(400, 350);
-                f.setSize(800, 100);
-                f.show();
-                return false;
-            }
-            if (DriveType.isEmpty()) {
-                l = new JLabel("DriveType Empty");
-                p.add(l);
-                f.add(p);
-                f.setLocation(400, 350);
-                f.setSize(800, 100);
-                f.show();
-                return false;
-            }
-            if (Axis.isEmpty()) {
-                l = new JLabel("Axis Empty");
-                p.add(l);
-                f.add(p);
-                f.setLocation(400, 350);
-                f.setSize(800, 100);
-                f.show();
-                return false;
-            }
-            if (FeedRate.isEmpty()) {
-                l = new JLabel("FeedRate Empty");
-                p.add(l);
-                f.add(p);
-                f.setLocation(400, 350);
-                f.setSize(800, 100);
-                f.show();
-                return false;
-            }
-            if (jComboBox1.getSelectedIndex() == 0) {
-                l = new JLabel("fequency (Hz) empty");
-                p.add(l);
-                f.add(p);
-                f.setLocation(400, 350);
-                f.setSize(800, 100);
-                f.show();
-                return false;
-            }
-            if (Delay1.isEmpty()) {
-                l = new JLabel("Delay Empty");
-                p.add(l);
-                f.add(p);
-                f.setLocation(400, 350);
-                f.setSize(800, 100);
-                f.show();
-                return false;
-            }
-
+        
+          if (MachineName.isEmpty() || DriveType.isEmpty() || Axis.isEmpty() || FeedRate.isEmpty() || Frequency1.isEmpty()) {
+          
+          if( MachineName.isEmpty()){ l = new JLabel("MachineName Empty"); p.add(l); f.add(p);f.setLocation(400, 350);f.setSize(800, 100); f.show(); return false;}
+          if( DriveType.isEmpty()){  l = new JLabel("DriveType Empty"); p.add(l); f.add(p);f.setLocation(400, 350);f.setSize(800, 100); f.show(); return false;} 
+          if( Axis.isEmpty()){  l = new JLabel("Axis Empty"); p.add(l); f.add(p);f.setLocation(400, 350);f.setSize(800, 100); f.show(); return false;}
+          if( FeedRate.isEmpty()){  l = new JLabel("FeedRate Empty"); p.add(l); f.add(p);f.setLocation(400, 350);f.setSize(800, 100); f.show(); return false;} 
+          if( Frequency1.isEmpty()){  l = new JLabel("Frequency1 Empty"); p.add(l); f.add(p);f.setLocation(400, 350);f.setSize(800, 100); f.show(); return false;}
+           
+           
         } else {
 
-            model.addRow(new Object[]{MachineName, DriveType, Axis, FeedRate, Frequency1, Delay1});
+            model.addRow(new Object[]{MachineName, DriveType, Axis, FeedRate, Frequency1});
             System.err.println("new Task");
-
-            jTextField1.setText("");
-            jTextField2.setText("");
-            jTextField3.setText("");
-            jTextField4.setText("");
-            jComboBox1.setSelectedItem("");
-            FeedRateDelay.setText("");
+            jTextField4.setText("0");
+          //  FeedRateDelay.setText("");
+//            jTextField1.setText("");
+//            jTextField2.setText("");
+//            jTextField3.setText("");
 
         }
         return true;
     }
-
     /**
      * @param args the command line arguments
      */
@@ -733,12 +689,9 @@ public class FeedRateConfigurationclutch extends javax.swing.JFrame {
             }
         });
     }
-    int TableIndex;
+     int TableIndex;
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTextField FeedRateDelay;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton14;
-    private javax.swing.JButton jButton16;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton20;
     private javax.swing.JButton jButton22;
@@ -752,7 +705,6 @@ public class FeedRateConfigurationclutch extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel11;
     private javax.swing.JPanel jPanel14;

@@ -9,6 +9,9 @@ import EditDeleteMachines.EditDeleteMachines;
 import FeedRateConfigurationClutch.FeedRateConfigurationclutch;
 import FeedRateConfigurationVdf.FeedRateConfigurationVdf;
 import IndexFrame.IndexJFrame;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Font;
 import java.io.File;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
@@ -159,6 +162,11 @@ public class CreateMachine extends javax.swing.JFrame {
 
         jButton2.setBackground(new java.awt.Color(255, 187, 0));
         jButton2.setText("DISCARD");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jButton3.setBackground(new java.awt.Color(220, 82, 238));
         jButton3.setText("BACK");
@@ -185,9 +193,9 @@ public class CreateMachine extends javax.swing.JFrame {
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addGap(21, 21, 21)
                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(62, 62, 62)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 74, Short.MAX_VALUE)
                 .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 82, Short.MAX_VALUE)
+                .addGap(70, 70, 70)
                 .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(21, 21, 21))
         );
@@ -206,6 +214,11 @@ public class CreateMachine extends javax.swing.JFrame {
         jLabel4.setText("Machine Type");
 
         jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select", "Lathe", "Milling" }));
+        jComboBox2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox2ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -273,8 +286,18 @@ public class CreateMachine extends javax.swing.JFrame {
                 Cre_SpindleStartDelayActionPerformed(evt);
             }
         });
+        Cre_SpindleStartDelay.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                Cre_SpindleStartDelayKeyReleased(evt);
+            }
+        });
 
         Cre_SpindleStopDelay.setText("0");
+        Cre_SpindleStopDelay.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                Cre_SpindleStopDelayKeyReleased(evt);
+            }
+        });
 
         jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icon/icons-plus-20.png"))); // NOI18N
         jButton5.setMaximumSize(new java.awt.Dimension(18, 29));
@@ -361,14 +384,14 @@ public class CreateMachine extends javax.swing.JFrame {
 
         jLabel9.setText("Y Axis Drive Type");
 
-        jComboBox4.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select", "Clutch", "VFD", " " }));
+        jComboBox4.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select", "Clutch", "VFD" }));
         jComboBox4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jComboBox4ActionPerformed(evt);
             }
         });
 
-        jComboBox5.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select", "Clutch", "VFD", " " }));
+        jComboBox5.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select", "Clutch", "VFD" }));
         jComboBox5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jComboBox5ActionPerformed(evt);
@@ -568,12 +591,8 @@ public class CreateMachine extends javax.swing.JFrame {
     private boolean SaveValidator() {
 
         JFrame f = new JFrame("Error");
-      //   f.setBounds(400, 350, 800, 100);
-        
         JPanel p = new JPanel();
-       
         JLabel l = null;
-   //     l.setFont(Font );
         String DROmodel = jComboBox1.getSelectedItem().toString();
         String MachineType = jComboBox2.getSelectedItem().toString();
         String XAxisDriveType = jComboBox3.getSelectedItem().toString();
@@ -583,89 +602,153 @@ public class CreateMachine extends javax.swing.JFrame {
         String MachineName = jTextField1.getText();
         String SpindleStopDelay = Cre_SpindleStopDelay.getText();
 
-        if (MachineName.isEmpty() || SpindleStartDelay.isEmpty() || SpindleStopDelay.isEmpty() || DROmodel.equals("Select") || MachineType.equals("Select") || XAxisDriveType.equals("Select") || YAxisDriveType.equals("Select") || ZAxisDriveType.equals("Select")) {
+        if (MachineName.isEmpty()) {
+            l = new JLabel("MachineName Empty");
+            p.add(l);
+            f.add(p);
+            l.setHorizontalAlignment(JLabel.CENTER);
+            l.setVerticalAlignment(JLabel.CENTER);
+            l.setPreferredSize(new Dimension(250, 50));
+            l.setFont(new Font("DIALOG_INPUT", Font.PLAIN, 14));
+            f.setBounds(350, 350, 600, 100);
+            l.setForeground(Color.red);
+            f.show();
+            return false;
+        }
+        if (SpindleStartDelay.isEmpty()) {
+            l = new JLabel("SpindleStartDelay Empty");
+            p.add(l);
+            f.add(p);
+            l.setHorizontalAlignment(JLabel.CENTER);
+            l.setVerticalAlignment(JLabel.CENTER);
+            l.setPreferredSize(new Dimension(250, 50));
+            l.setFont(new Font("DIALOG_INPUT", Font.PLAIN, 14));
+            f.setBounds(350, 350, 600, 100);
+            l.setForeground(Color.red);
 
-            if (MachineName.isEmpty()) {
-                l = new JLabel("MachineName Empty");
+            f.show();
+            //pack();
+            return false;
+        }
+        if (SpindleStopDelay.isEmpty()) {
+            l = new JLabel("SpindleStopDelay Empty");
+            p.add(l);
+            f.add(p);
+            l.setHorizontalAlignment(JLabel.CENTER);
+            l.setVerticalAlignment(JLabel.CENTER);
+            l.setPreferredSize(new Dimension(250, 50));
+            l.setFont(new Font("DIALOG_INPUT", Font.PLAIN, 14));
+            f.setBounds(350, 350, 600, 100);
+            l.setForeground(Color.red);
+
+            f.show();
+            return false;
+        }
+        if ("Select".equals(DROmodel)) {
+            l = new JLabel("Select DRO model type");
+            p.add(l);
+            f.add(p);
+            l.setHorizontalAlignment(JLabel.CENTER);
+            l.setVerticalAlignment(JLabel.CENTER);
+            l.setPreferredSize(new Dimension(250, 50));
+            l.setFont(new Font("DIALOG_INPUT", Font.PLAIN, 14));
+            f.setBounds(350, 350, 600, 100);
+            l.setForeground(Color.red);
+            f.show();
+            return false;
+        }
+
+        else if ("Select".equals(MachineType)) {
+            l = new JLabel("Select machine type");
+            p.add(l);
+            f.add(p);
+            l.setHorizontalAlignment(JLabel.CENTER);
+            l.setVerticalAlignment(JLabel.CENTER);
+            l.setPreferredSize(new Dimension(250, 50));
+            l.setFont(new Font("DIALOG_INPUT", Font.PLAIN, 14));
+            f.setBounds(350, 350, 600, 100);
+            l.setForeground(Color.red);
+            f.show();
+            return false;
+        } else if (MachineType.equals("Milling")) {
+            String axisType =  DROmodel;
+           
+            
+           
+            if (("3 Axis".equals(axisType) && XAxisDriveType.equals("Select"))||("2 Axis".equals(axisType) && XAxisDriveType.equals("Select"))) {
+                l = new JLabel("Select X-Axis Drive type");
                 p.add(l);
                 f.add(p);
-                f.setLocation(400, 350);
-                f.setSize(800, 100);
+                l.setHorizontalAlignment(JLabel.CENTER);
+                l.setVerticalAlignment(JLabel.CENTER);
+                l.setPreferredSize(new Dimension(250, 50));
+                l.setFont(new Font("DIALOG_INPUT", Font.PLAIN, 14));
+                f.setBounds(350, 350, 600, 100);
+                l.setForeground(Color.red);
                 f.show();
                 return false;
             }
-            if (SpindleStartDelay.isEmpty()) {
-                l = new JLabel("SpindleStartDelay Empty");
+            if (("3 Axis".equals(axisType) && YAxisDriveType.equals("Select"))||(("2 Axis".equals(axisType) && YAxisDriveType.equals("Select")))) {
+                l = new JLabel("Select Y-Axis Drive type");
                 p.add(l);
                 f.add(p);
-                f.setLocation(400, 350);
-                f.setSize(800, 100);
-                
-                f.show();
-                //pack();
-                return false;
-            }
-            if (SpindleStopDelay.isEmpty()) {
-                l = new JLabel("SpindleStopDelay Empty");
-                p.add(l);
-                f.add(p);
-                f.setLocation(400, 350);
-                f.setSize(800, 100);
-               
+                l.setHorizontalAlignment(JLabel.CENTER);
+                l.setVerticalAlignment(JLabel.CENTER);
+                l.setPreferredSize(new Dimension(250, 50));
+                l.setFont(new Font("DIALOG_INPUT", Font.PLAIN, 14));
+                f.setBounds(350, 350, 600, 100);
+                l.setForeground(Color.red);
                 f.show();
                 return false;
             }
-            if (DROmodel.equals("Select")) {
-                l = new JLabel("Select DRO model type");
+            if ("3 Axis".equals(axisType) && ZAxisDriveType.equals("Select")) {
+                l = new JLabel("Select Z-Axis Drive type");
                 p.add(l);
                 f.add(p);
-                f.setLocation(400, 350);
-                f.setSize(800, 100);
+                l.setHorizontalAlignment(JLabel.CENTER);
+                l.setVerticalAlignment(JLabel.CENTER);
+                l.setPreferredSize(new Dimension(250, 50));
+                l.setFont(new Font("DIALOG_INPUT", Font.PLAIN, 14));
+                f.setBounds(350, 350, 600, 100);
+                l.setForeground(Color.red);
                 f.show();
                 return false;
             }
-            if (MachineType.equals("Select")) {
-                l = new JLabel("Select machine type");
-                p.add(l);
-                f.add(p);
-                f.setLocation(400, 350);
-                f.setSize(800, 100);
-                f.show();
-                return false;
-            }
+
+        } else if (MachineType.equals("Lathe")) {
+
+            System.err.println("Lathe");
             if (XAxisDriveType.equals("Select")) {
                 l = new JLabel("Select X-Axis Drive type");
                 p.add(l);
                 f.add(p);
-                f.setLocation(400, 350);
-                f.setSize(800, 100);
+                l.setHorizontalAlignment(JLabel.CENTER);
+                l.setVerticalAlignment(JLabel.CENTER);
+                l.setPreferredSize(new Dimension(250, 50));
+                l.setFont(new Font("DIALOG_INPUT", Font.PLAIN, 14));
+                f.setBounds(350, 350, 600, 100);
+                l.setForeground(Color.red);
                 f.show();
                 return false;
             }
-            if (YAxisDriveType.equals("Select")) {
+              if (YAxisDriveType.equals("Select")) {
                 l = new JLabel("Select Y-Axis Drive type");
                 p.add(l);
                 f.add(p);
-                f.setLocation(400, 350);
-                f.setSize(800, 100);
+                l.setHorizontalAlignment(JLabel.CENTER);
+                l.setVerticalAlignment(JLabel.CENTER);
+                l.setPreferredSize(new Dimension(250, 50));
+                l.setFont(new Font("DIALOG_INPUT", Font.PLAIN, 14));
+                f.setBounds(350, 350, 600, 100);
+                l.setForeground(Color.red);
                 f.show();
                 return false;
             }
-            if (ZAxisDriveType.equals("Select")) {
-                l = new JLabel("Select Z-Axis Drive type");
-                p.add(l);
-                f.add(p);
-                f.setLocation(400, 350);
-                f.setSize(800, 100);
-                f.show();
-                return false;
-            }
-
-        } else {
-            this.setVisible(false);
-            new EditDeleteMachines().setVisible(true);
 
         }
+
+        this.setVisible(false);
+        new EditDeleteMachines().setVisible(true);
 
         return false;
 
@@ -673,6 +756,27 @@ public class CreateMachine extends javax.swing.JFrame {
 
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
         // TODO add your handling code here:
+         int n = jComboBox1.getSelectedIndex();
+        if (n == 0) {
+            jComboBox1.setSelectedIndex(0);
+            jComboBox2.setSelectedIndex(0);
+            jComboBox3.setSelectedIndex(0);
+            jComboBox4.setSelectedIndex(0);
+            jComboBox5.setSelectedIndex(0);
+            jComboBox5.setEnabled(true);
+            jButton22.setEnabled(true);
+        } else {
+            if (n == 1) {
+                jComboBox2.setSelectedIndex(1);
+                jComboBox5.setEnabled(false);
+                jButton22.setEnabled(false);
+            } else {
+                jComboBox2.setSelectedIndex(2);
+                jComboBox5.setEnabled(true);
+                jButton22.setEnabled(true);
+            }
+        }
+        
     }//GEN-LAST:event_jComboBox1ActionPerformed
 
 
@@ -712,8 +816,25 @@ public class CreateMachine extends javax.swing.JFrame {
         if (!Cre_SpindleStartDelay.getText().isEmpty()) {
 
             int StartDelay = Integer.parseInt(Cre_SpindleStartDelay.getText());
+            if(StartDelay <= 9998){
             StartDelay = StartDelay + 1;
             Cre_SpindleStartDelay.setText(Integer.toString(StartDelay));
+              }else{
+              JFrame f = new JFrame("Error");
+            JPanel p = new JPanel();
+            JLabel l = null; 
+            l = new JLabel("Delay should be less than 9999 ");
+            p.add(l);
+            f.add(p);
+            l.setHorizontalAlignment(JLabel.CENTER);
+            l.setVerticalAlignment(JLabel.CENTER);
+            l.setPreferredSize(new Dimension(250, 50));
+            l.setFont(new Font("DIALOG_INPUT", Font.PLAIN, 14));
+            f.setBounds(350, 350, 600, 100);
+            l.setForeground(Color.red);
+            f.show();
+         
+            }
         } else {
             Cre_SpindleStartDelay.setText(Integer.toString(0));
         }
@@ -723,9 +844,26 @@ public class CreateMachine extends javax.swing.JFrame {
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
         if (!Cre_SpindleStopDelay.getText().isEmpty()) {
+            
             int StopDelay = Integer.parseInt(Cre_SpindleStopDelay.getText());
+             if(StopDelay <= 9998){
             StopDelay = StopDelay + 1;
             Cre_SpindleStopDelay.setText(Integer.toString(StopDelay));
+             } else{
+                JFrame f = new JFrame("Error");
+            JPanel p = new JPanel();
+            JLabel l = null; 
+            l = new JLabel("Delay should be less than 9999 ");
+            p.add(l);
+            f.add(p);
+            l.setHorizontalAlignment(JLabel.CENTER);
+            l.setVerticalAlignment(JLabel.CENTER);
+            l.setPreferredSize(new Dimension(250, 50));
+            l.setFont(new Font("DIALOG_INPUT", Font.PLAIN, 14));
+            f.setBounds(350, 350, 600, 100);
+            l.setForeground(Color.red);
+            f.show();
+             }
         } else {
             Cre_SpindleStopDelay.setText(Integer.toString(0));
         }
@@ -768,6 +906,7 @@ public class CreateMachine extends javax.swing.JFrame {
         String Filename = f.getAbsolutePath();
         jButton20.setText(Filename);
         jButton23.setEnabled(true);
+        Xmv = 1;
     }//GEN-LAST:event_jButton20ActionPerformed
 
     private void jComboBox4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox4ActionPerformed
@@ -805,6 +944,7 @@ public class CreateMachine extends javax.swing.JFrame {
         String Filename = f.getAbsolutePath();
         jButton21.setText(Filename);
         jButton24.setEnabled(true);
+        Ymv = 1;
     }//GEN-LAST:event_jButton21ActionPerformed
 
     private void jButton22ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton22ActionPerformed
@@ -816,6 +956,7 @@ public class CreateMachine extends javax.swing.JFrame {
         String Filename = f.getAbsolutePath();
         jButton22.setText(Filename);
         jButton25.setEnabled(true);
+        Zmv = 1;
     }//GEN-LAST:event_jButton22ActionPerformed
 
     private void jButton24ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton24ActionPerformed
@@ -851,6 +992,60 @@ public class CreateMachine extends javax.swing.JFrame {
         new IndexJFrame().setVisible(true);
     }//GEN-LAST:event_formWindowClosing
 
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        this.setVisible(false);
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void Cre_SpindleStartDelayKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_Cre_SpindleStartDelayKeyReleased
+        // TODO add your handling code here:
+        int key = evt.getKeyCode();
+
+        if ((key >= 48 && key <= 57) || (key >= 96 && key <= 105) || (key == 46) || (key == 8) || (key == 190)) {
+            Cre_SpindleStartDelay.setText(Cre_SpindleStartDelay.getText());
+        } else {
+            Cre_SpindleStartDelay.setText("0");
+
+        }
+    }//GEN-LAST:event_Cre_SpindleStartDelayKeyReleased
+
+    private void Cre_SpindleStopDelayKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_Cre_SpindleStopDelayKeyReleased
+        // TODO add your handling code here:
+        int key = evt.getKeyCode();
+
+        if ((key >= 48 && key <= 57) || (key >= 96 && key <= 105) || (key == 46) || (key == 8)  || (key == 190)) {
+            Cre_SpindleStopDelay.setText(Cre_SpindleStopDelay.getText());
+        } else {
+            Cre_SpindleStopDelay.setText("0");
+
+        }
+    }//GEN-LAST:event_Cre_SpindleStopDelayKeyReleased
+
+    private void jComboBox2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox2ActionPerformed
+        // TODO add your handling code here:
+        
+         int n = jComboBox2.getSelectedIndex();
+        if (n == 0) {
+            jComboBox1.setSelectedIndex(0);
+            jComboBox2.setSelectedIndex(0);
+            jComboBox3.setSelectedIndex(0);
+            jComboBox4.setSelectedIndex(0);
+            jComboBox5.setSelectedIndex(0);
+            jComboBox5.setEnabled(true);
+            jButton22.setEnabled(true);
+        } else {
+            if (n == 1) {
+                jComboBox1.setSelectedIndex(1);
+                jComboBox5.setEnabled(false);
+                jButton22.setEnabled(false);
+            } else {
+                jComboBox1.setSelectedIndex(2);
+                jComboBox5.setEnabled(true);
+                jButton22.setEnabled(true);
+            }
+        }
+    }//GEN-LAST:event_jComboBox2ActionPerformed
+
     private boolean XYZaxisValidatoronConfiguration(String Idendifier) {
 
         JFrame f = new JFrame("Error");
@@ -859,29 +1054,43 @@ public class CreateMachine extends javax.swing.JFrame {
         //  CCGlobZAxisDriveType
         if (Idendifier.equals("GlobXAxisDriveType")) {
             l = new JLabel("Select X-Axis Drive type");
+
+            l.setHorizontalAlignment(JLabel.CENTER);
+            l.setVerticalAlignment(JLabel.CENTER);
+            l.setPreferredSize(new Dimension(250, 50));
+            l.setFont(new Font("DIALOG_INPUT", Font.PLAIN, 14));
+            f.setBounds(350, 350, 600, 100);
+            l.setForeground(Color.red);
             p.add(l);
             f.add(p);
-            f.setLocation(400, 350);
-            f.setSize(800, 100);
-           
             f.show();
             return false;
         }
         if (Idendifier.equals("GlobYAxisDriveType")) {
             l = new JLabel("Select Y-Axis Drive type");
+
+            l.setHorizontalAlignment(JLabel.CENTER);
+            l.setVerticalAlignment(JLabel.CENTER);
+            l.setPreferredSize(new Dimension(250, 50));
+            l.setFont(new Font("DIALOG_INPUT", Font.PLAIN, 14));
+            f.setBounds(350, 350, 600, 100);
+            l.setForeground(Color.red);
             p.add(l);
             f.add(p);
-            f.setLocation(400, 350);
-            f.setSize(800, 100);
             f.show();
             return false;
         }
         if (Idendifier.equals("GlobZAxisDriveType")) {
             l = new JLabel("Select Z-Axis Drive type");
+
+            l.setHorizontalAlignment(JLabel.CENTER);
+            l.setVerticalAlignment(JLabel.CENTER);
+            l.setPreferredSize(new Dimension(250, 50));
+            l.setFont(new Font("DIALOG_INPUT", Font.PLAIN, 14));
+            f.setBounds(350, 350, 600, 100);
+            l.setForeground(Color.red);
             p.add(l);
             f.add(p);
-            f.setLocation(400, 350);
-            f.setSize(800, 100);
             f.show();
             return false;
         }
@@ -926,6 +1135,9 @@ public class CreateMachine extends javax.swing.JFrame {
     String GlobXAxisDriveType;
     String GlobYAxisDriveType;
     String GlobZAxisDriveType;
+    int Xmv;
+    int Ymv;
+    int Zmv;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField Cre_SpindleStartDelay;
     private javax.swing.JTextField Cre_SpindleStopDelay;
