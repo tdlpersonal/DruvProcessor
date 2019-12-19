@@ -457,84 +457,80 @@ public class FeedRateConfigurationclutch extends javax.swing.JFrame {
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
         // TODO add your handling code here:
-      //   new CreateMachineConfiguration().setVisible(true);
+        //   new CreateMachineConfiguration().setVisible(true);
     }//GEN-LAST:event_formWindowClosing
 
     private void jButton20ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton20ActionPerformed
-  
+
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
         int index = jTable1.getSelectedRow();
 //        System.err.println(index);
 //        System.err.println(TableIndex);
-         
-        if(index != -1){
-        if (index >= 0) {
+
+        if (index != -1) {
+            if (index >= 0) {
+                JFrame f = new JFrame("Error");
+                JPanel p = new JPanel();
+                JLabel l = null;
+
+                String machinename = jTextField1.getText();
+                if (machinename.isEmpty()) {
+                    l = new JLabel("Please select record ");
+                    p.add(l);
+                    f.add(p);
+                    l.setHorizontalAlignment(JLabel.CENTER);
+                    l.setVerticalAlignment(JLabel.CENTER);
+                    l.setPreferredSize(new Dimension(250, 50));
+                    l.setFont(new Font("DIALOG_INPUT", Font.PLAIN, 14));
+                    f.setBounds(350, 350, 600, 100);
+                    l.setForeground(Color.red);
+                    f.show();
+
+                } else {
+                    model.removeRow(TableIndex);
+                    System.err.println("Removed Row " + TableIndex);
+                }
+
+                jTextField4.setText("0");
+                jComboBox1.setSelectedIndex(0);
+
+            }
+        } else {
+
             JFrame f = new JFrame("Error");
             JPanel p = new JPanel();
             JLabel l = null;
+            l = new JLabel("Please select or insert record ");
+            p.add(l);
+            f.add(p);
+            l.setHorizontalAlignment(JLabel.CENTER);
+            l.setVerticalAlignment(JLabel.CENTER);
+            l.setPreferredSize(new Dimension(250, 50));
+            l.setFont(new Font("DIALOG_INPUT", Font.PLAIN, 14));
+            f.setBounds(350, 350, 600, 100);
+            l.setForeground(Color.red);
+            f.show();
 
-            String machinename = jTextField1.getText();
-            if (machinename.isEmpty()) {
-                l = new JLabel("Please select record ");
-                p.add(l);
-                f.add(p);
-                l.setHorizontalAlignment(JLabel.CENTER);
-                l.setVerticalAlignment(JLabel.CENTER);
-                l.setPreferredSize(new Dimension(250, 50));
-                l.setFont(new Font("DIALOG_INPUT", Font.PLAIN, 14));
-                f.setBounds(350, 350, 600, 100);
-                l.setForeground(Color.red);
-                f.show();
-                                               
-            } else {
-                model.removeRow(TableIndex);
-                System.err.println("Removed Row " + TableIndex);
-            }
-          
-            jTextField4.setText("0");
-            jComboBox1.setSelectedIndex(0);
-
-    }
-        } else{
-        
-              JFrame f = new JFrame("Error");
-            JPanel p = new JPanel();
-            JLabel l = null;
-           l = new JLabel("Please select or insert record ");
-                p.add(l);
-                f.add(p);
-                l.setHorizontalAlignment(JLabel.CENTER);
-                l.setVerticalAlignment(JLabel.CENTER);
-                l.setPreferredSize(new Dimension(250, 50));
-                l.setFont(new Font("DIALOG_INPUT", Font.PLAIN, 14));
-                f.setBounds(350, 350, 600, 100);
-                l.setForeground(Color.red);
-                f.show();
-        
         }
     }//GEN-LAST:event_jButton20ActionPerformed
 
-    private boolean validator(){
-      
-          System.err.println(TableIndex);
-        if(TableIndex == 0){
-        
-        return false;
-        }else{
-         return false;
+    private boolean validator() {
+
+        System.err.println(TableIndex);
+        if (TableIndex == 0) {
+
+            return false;
+        } else {
+            return false;
         }
-        
-       
-    
-    
-   
+
     }
-    
+
     private void jButton24ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton24ActionPerformed
         // TODO add your handling code here:
 
         jTextField4.setText("");
-       // FeedRateDelay.setText("");
+        // FeedRateDelay.setText("");
 //        jTextField1.setText("");
 //        jTextField2.setText("");
 //        jTextField3.setText("");
@@ -567,24 +563,23 @@ public class FeedRateConfigurationclutch extends javax.swing.JFrame {
         String Drivetype = model.getValueAt(index, 1).toString();
         String Axis = model.getValueAt(index, 2).toString();
         String FeedRate = model.getValueAt(index, 3).toString();
-      //  String Frequency = model.getValueAt(index, 4).toString();
+        //  String Frequency = model.getValueAt(index, 4).toString();
         jTextField4.setText(FeedRate);
 
         jComboBox1.getSelectedItem().toString();
-    //    FeedRateDelay.setText(Delay);
+        //    FeedRateDelay.setText(Delay);
         jTextField1.setText(MachineName);
         jTextField2.setText(Drivetype);
         jTextField3.setText(Axis);
         TableIndex = index;
 
-       
 
     }//GEN-LAST:event_jTable1MouseClicked
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
         this.setVisible(false);
-       new CreateMachine().setVisible(true);
+        new CreateMachine().setVisible(true);
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -611,43 +606,102 @@ public class FeedRateConfigurationclutch extends javax.swing.JFrame {
 
     private void jTextField4KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField4KeyReleased
         // TODO add your handling code here:
-        
-          int key = evt.getKeyCode();
 
-        if ((key >= 48 && key <= 57) || (key >= 96 && key <= 105) || (key == 46) || (key == 8)  || (key == 190)) {
+        int key = evt.getKeyCode();
+
+        if ((key >= 48 && key <= 57) || (key >= 96 && key <= 105) || (key == 46) || (key == 8) || (key == 190)) {
             jTextField4.setText(jTextField4.getText());
         } else {
             jTextField4.setText("0");
 
         }
     }//GEN-LAST:event_jTextField4KeyReleased
- private boolean newTask() {
+    private boolean newTask() {
         DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
-          JFrame f = new JFrame("Error");
-            JPanel p = new JPanel();
-            JLabel l = null;
+        JFrame f = new JFrame("Error");
+        JPanel p = new JPanel();
+        JLabel l = null;
         String FeedRate = jTextField4.getText();
         String Frequency1 = jComboBox1.getSelectedItem().toString();
-       // String Delay1 = FeedRateDelay.getText();
+        // String Delay1 = FeedRateDelay.getText();
         String MachineName = jTextField1.getText();
         String DriveType = jTextField2.getText();
         String Axis = jTextField3.getText();
-        
-          if (MachineName.isEmpty() || DriveType.isEmpty() || Axis.isEmpty() || FeedRate.isEmpty() || Frequency1.isEmpty()) {
-          
-          if( MachineName.isEmpty()){ l = new JLabel("MachineName Empty"); p.add(l); f.add(p);f.setLocation(400, 350);f.setSize(800, 100); f.show(); return false;}
-          if( DriveType.isEmpty()){  l = new JLabel("DriveType Empty"); p.add(l); f.add(p);f.setLocation(400, 350);f.setSize(800, 100); f.show(); return false;} 
-          if( Axis.isEmpty()){  l = new JLabel("Axis Empty"); p.add(l); f.add(p);f.setLocation(400, 350);f.setSize(800, 100); f.show(); return false;}
-          if( FeedRate.isEmpty()){  l = new JLabel("FeedRate Empty"); p.add(l); f.add(p);f.setLocation(400, 350);f.setSize(800, 100); f.show(); return false;} 
-          if( Frequency1.isEmpty()){  l = new JLabel("Frequency1 Empty"); p.add(l); f.add(p);f.setLocation(400, 350);f.setSize(800, 100); f.show(); return false;}
-           
-           
+
+        if (MachineName.isEmpty() || DriveType.isEmpty() || Axis.isEmpty() || FeedRate.isEmpty() || Frequency1.equals("Select")) {
+
+            if (MachineName.isEmpty()) {
+            l = new JLabel("MachineName Empty");
+            l.setHorizontalAlignment(JLabel.CENTER);
+            l.setVerticalAlignment(JLabel.CENTER);
+            l.setPreferredSize(new Dimension(250, 50));
+            l.setFont(new Font("DIALOG_INPUT", Font.PLAIN, 14));
+            l.setForeground(Color.red);
+            f.setBounds(350, 350, 600, 100);
+            p.add(l);
+            f.add(p);
+                f.show();
+                return false;
+            }
+            if (DriveType.isEmpty()) {
+                l = new JLabel("DriveType Empty");
+               l.setHorizontalAlignment(JLabel.CENTER);
+            l.setVerticalAlignment(JLabel.CENTER);
+            l.setPreferredSize(new Dimension(250, 50));
+            l.setFont(new Font("DIALOG_INPUT", Font.PLAIN, 14));
+            l.setForeground(Color.red);
+            f.setBounds(350, 350, 600, 100);
+            p.add(l);
+            f.add(p);
+                f.show();
+                return false;
+            }
+            if (Axis.isEmpty()) {
+                l = new JLabel("Axis Empty");
+                l.setHorizontalAlignment(JLabel.CENTER);
+            l.setVerticalAlignment(JLabel.CENTER);
+            l.setPreferredSize(new Dimension(250, 50));
+            l.setFont(new Font("DIALOG_INPUT", Font.PLAIN, 14));
+            l.setForeground(Color.red);
+            f.setBounds(350, 350, 600, 100);
+            p.add(l);
+            f.add(p);
+                f.show();
+                return false;
+            }
+            if (FeedRate.isEmpty()) {
+                l = new JLabel("FeedRate Empty");
+                 l.setHorizontalAlignment(JLabel.CENTER);
+            l.setVerticalAlignment(JLabel.CENTER);
+            l.setPreferredSize(new Dimension(250, 50));
+            l.setFont(new Font("DIALOG_INPUT", Font.PLAIN, 14));
+            l.setForeground(Color.red);
+            f.setBounds(350, 350, 600, 100);
+            p.add(l);
+            f.add(p);
+                f.show();
+                return false;
+            }
+            if (Frequency1.equals("Select")) {
+            l = new JLabel("Frequency is Empty");
+            l.setHorizontalAlignment(JLabel.CENTER);
+            l.setVerticalAlignment(JLabel.CENTER);
+            l.setPreferredSize(new Dimension(250, 50));
+            l.setFont(new Font("DIALOG_INPUT", Font.PLAIN, 14));
+            l.setForeground(Color.red);
+            f.setBounds(350, 350, 600, 100);
+            p.add(l);
+            f.add(p);
+            f.show();
+                return false;
+            }
+
         } else {
 
             model.addRow(new Object[]{MachineName, DriveType, Axis, FeedRate, Frequency1});
             System.err.println("new Task");
             jTextField4.setText("0");
-          //  FeedRateDelay.setText("");
+            //  FeedRateDelay.setText("");
 //            jTextField1.setText("");
 //            jTextField2.setText("");
 //            jTextField3.setText("");
@@ -655,6 +709,7 @@ public class FeedRateConfigurationclutch extends javax.swing.JFrame {
         }
         return true;
     }
+
     /**
      * @param args the command line arguments
      */
@@ -689,7 +744,7 @@ public class FeedRateConfigurationclutch extends javax.swing.JFrame {
             }
         });
     }
-     int TableIndex;
+    int TableIndex;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;

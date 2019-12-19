@@ -267,11 +267,6 @@ public class IndexJFrame extends javax.swing.JFrame {
             }
         });
     }
-    
-    
-    
-    
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
