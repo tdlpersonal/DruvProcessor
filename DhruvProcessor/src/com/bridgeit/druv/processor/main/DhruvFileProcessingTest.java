@@ -1,7 +1,8 @@
 /************************************************************************************************
- *    code added By Gurunath patil
+ *    Code added By Gurunath patil
  * 
- * 
+ *    Code Updated Date 20/12/2019
+ *    Details:-XMV,YMV,ZMV,MACHIN_Config and NCL File in Every folder
  * 
  * 
  * 
@@ -27,59 +28,29 @@ public class DhruvFileProcessingTest {
 		FileInputStream Pathip= new FileInputStream("C:/Dhruv/DruvProcessor/path_config.properties");
 		PropertiesPath.load(Pathip);
 		System.out.println(PropertiesPath.getProperty("OutPutParentFolderPath"));
-		
+/***************************** FILE PATH VARIABLES START *******************************************/
 		 File XmvPath=null;
 		 File YmvPath=null;
 		 File ZmvPath=null;
 		 File MachineConfigPath=null;
 		 File NclFilePath=null;
-		 /***********************************/
+		 String outputDestinationPath = null;
+		 File SourceCODEpath=null;
+		 File SourceCODE_Filepath=null;
+		 File DestinationCODEpath=null;
+		 File DestinationCODE_Filepath=null;
+ /***************************** FILE PATH VARIABLES START *******************************************/
+
+ /*********************************** FILE PATH ***************************************************/
 		 String OutPutParentFolderPath=PropertiesPath.getProperty("OutPutParentFolderPath");
-		 String XMT_YMV_ZMV_Path=PropertiesPath.getProperty("XMT_YMV_ZMV_Path");
-		 String MachineConfigRootPath=PropertiesPath.getProperty("MachineConfigRootPath");
 		 String SourceCode_FilePath=PropertiesPath.getProperty("SourceCode_FilePath");
-		 /***********************************/
+ /**********************************FILE PATH END*******************************************************/
 		 
+ /********** OUTPUT FILE PATH FOLDER,IF ANY CODE FOLDER IS THERE THEN CODE WILL REMOVE IT ****************************************/
 		 final File OutPutNclFilePath= new File(OutPutParentFolderPath);
 		 final boolean isDebug = false;
-		
-		final File MachineConfigfolder = new File(MachineConfigRootPath);
-		File[] listOfmachineConfiFiles = MachineConfigfolder.listFiles();
-		for (int i = 0; i < listOfmachineConfiFiles.length; i++) {
-			if (listOfmachineConfiFiles[i].isFile()) {
-				String FileNAME = listOfmachineConfiFiles[i].getName();
-				MachineConfigPath=new File(MachineConfigRootPath+"/"+FileNAME);
-			}
-			else if (listOfmachineConfiFiles[i].isDirectory()) {
-			}
-		}
-		
-		final File ConfigXmvYmvZmv = new File(XMT_YMV_ZMV_Path);
-		File[] listOfXmvYmvZmvFiles = ConfigXmvYmvZmv.listFiles();
-  
-		for (int i = 0; i < listOfXmvYmvZmvFiles.length; i++) {
-			if (listOfXmvYmvZmvFiles[i].isFile()) {
-				String FileNAME = listOfXmvYmvZmvFiles[i].getName();
-			///	System.out.println("File " + FileNAME);
-				if(FileNAME.contains("XMV")){
-					XmvPath=new File(XMT_YMV_ZMV_Path+"/"+FileNAME);
-				} 
-				else if(FileNAME.contains("YMV")){
-					YmvPath=new File(XMT_YMV_ZMV_Path+"/"+FileNAME);
-				} 
-				else  if(FileNAME.contains("ZMV")){
-                 ZmvPath=new File(XMT_YMV_ZMV_Path+"/"+FileNAME);
-				} 
-
-			} else if (listOfXmvYmvZmvFiles[i].isDirectory()) {
-				//System.out.println("Directory " + listOfXmvYmvZmvFiles[i].getName());
-			}
-		}
-		  //   String DestiPath ="C:/MachineOutPut/";
-		          
-		
-		File OutputfileFolder = new File(OutPutParentFolderPath);
-		File[] listOfSourceFolder = OutputfileFolder.listFiles();
+		 File OutputfileFolder = new File(OutPutParentFolderPath);
+		 File[] listOfSourceFolder = OutputfileFolder.listFiles();
 		
 		for (int Srs = 0; Srs < listOfSourceFolder.length; Srs++) {
 			if (!listOfSourceFolder[Srs].isFile()) {
@@ -87,33 +58,52 @@ public class DhruvFileProcessingTest {
 				File OutputfilerootFolder = new File(OutPutParentFolderPath+RootFolderName);
 				deleteDirectory(new File(OutputfilerootFolder.toString()));	
 			}
-		}
-			
+		} 
+ /******************* *********    CODE FOLDER REMOVE CODE END  **************************************************/			
+	
+ /******************* *********   GETTING SOURCE ROOT FOLDER OF ALL CODE AND XMV YMV ZMV CONFIG NCL FILE  **************************************************/			
+
 		final File SourceFilesncl = new File(SourceCode_FilePath);
 		File[] listOfSourceFilesnclFiles = SourceFilesncl.listFiles();
-				
+	
 		for (int i = 0; i < listOfSourceFilesnclFiles.length; i++) {
 			if (!listOfSourceFilesnclFiles[i].isFile()) {
 
 				String FolderName = listOfSourceFilesnclFiles[i].getName();
 				final File SourceFilefolder = new File(SourceCode_FilePath+"/"+FolderName);
-				File[] listOfSourceFilesncl = SourceFilefolder.listFiles();
+				File[] listOfSourceFiles = SourceFilefolder.listFiles();
 				
-				 String outputDestinationPath = null;
-				 File SourceCODEpath=null;
-				 File SourceCODE_Filepath=null;
-				 File DestinationCODEpath=null;
-				 File DestinationCODE_Filepath=null;
-				 
-				for (int j = 0; j < listOfSourceFilesncl.length; j++) {
-					if (listOfSourceFilesncl[j].isFile()) {
-						String NclFileNAme = listOfSourceFilesncl[j].getName();
-						NclFilePath=new File(SourceCode_FilePath+"/"+FolderName+"/"+NclFileNAme);
+	/***************** GETTING ALL NCL CONFIG XMV YMV ZMV EACH TIME START *********************  */
+				for (int j = 0; j < listOfSourceFiles.length; j++) {
+					if (listOfSourceFiles[j].isFile()) {
+						
+						for (int AllFilesCount = 0; AllFilesCount < listOfSourceFiles.length; AllFilesCount++) {
+							if (listOfSourceFiles[AllFilesCount].isFile()) {
+							String SourceFileName = listOfSourceFiles[AllFilesCount].getName();
+							if(SourceFileName.contains("XMV")){
+								XmvPath=new File(SourceCode_FilePath+"/"+FolderName+"/"+SourceFileName);
+							} 
+							else if(SourceFileName.contains("YMV")){
+								YmvPath=new File(SourceCode_FilePath+"/"+FolderName+"/"+SourceFileName);
+							} 
+							else  if(SourceFileName.contains("ZMV")){
+			                 ZmvPath=new File(SourceCode_FilePath+"/"+FolderName+"/"+SourceFileName);
+							} 
+							else  if(SourceFileName.contains(".ncl")){
+								NclFilePath=new File(SourceCode_FilePath+"/"+FolderName+"/"+SourceFileName);
+							}
+							else  if(SourceFileName.contains("MACHINE_CONF")){
+								MachineConfigPath=new File(SourceCode_FilePath+"/"+FolderName+"/"+SourceFileName);
+							}
+							}							
+							}
+		/************************  ALL NCL CONFIG XMV YMV ZMV EACH TIME END *********************  */				
 						if(isDebug)
 						System.out.println("_______________________________"+NclFilePath);
 						String ChildFolderNAME ="";
-						if (!listOfSourceFilesncl[0].isFile()){  ChildFolderNAME = listOfSourceFilesncl[0].getName();}
+						if (!listOfSourceFiles[0].isFile()){  ChildFolderNAME = listOfSourceFiles[0].getName();}
 						File OutputfilePath = new File(OutPutParentFolderPath + FolderName);
+		/*****************!!!!!!  PASSING ALL  NCL CONFIG XMV YMV ZMV FILE EACH TIME TO DHRUV MAIN CLASS FILE START !!!!!!!!!!!*********************  */				
 						boolean bool = OutputfilePath.mkdir();  
 						if (bool) {
 							outputDestinationPath = OutputfilePath.toString();
@@ -132,6 +122,10 @@ public class DhruvFileProcessingTest {
 							DestinationCODEpath=new File(OutPutParentFolderPath + FolderName+"/"+ChildFolderNAME);
 							File[] SorceFolderOutPutTXTfiles = SourceCODEpath.listFiles();
 							File[] DestinationFolderOutPutTXTfiles = DestinationCODEpath.listFiles();
+	/*****************!!!!!!  PASSING ALL  NCL CONFIG XMV YMV ZMV FILE EACH TIME TO DHRUV MAIN CLASS FILE END !!!!!!!!!!!*********************  */				
+							
+		/*****************!!!!!!  COMPARING SOURCE OUT PUT FILES AND NEWLY GENERATED OUT PUT FILES START !!!!!!!!!!!*********************  */				
+				
 							for (int DisfileCount = 0; DisfileCount < DestinationFolderOutPutTXTfiles.length; DisfileCount++) {
 								if (DestinationFolderOutPutTXTfiles[DisfileCount].isFile()) {
 									String DistOutFileName = DestinationFolderOutPutTXTfiles[DisfileCount].getName();
@@ -172,19 +166,19 @@ public class DhruvFileProcessingTest {
 						         Destination_OutPut_File.close();
 								}
 							}
+/*****************!!!!!!  COMPARING SOURCE OUT PUT FILES AND NEWLY GENERATED OUT PUT FILES START !!!!!!!!!!!*********************  */				
+
+					
 							} catch (Exception e) {
 								
 								 e.printStackTrace();
 							}
-						         
-							
+
 						} else {
 							if(isDebug)
-							System.out.println(FolderName + ":Sorry couldn’t create specified Folder");
+							System.out.println(FolderName + ":Sorry couldnâ€™t create specified Folder");
 						}
-					
 					}
-					
 				}
 			} else if (listOfSourceFilesnclFiles[i].isDirectory()) {
 				if(isDebug)
@@ -215,7 +209,6 @@ public class DhruvFileProcessingTest {
                 }
             }
         }
-       // System.out.println("removing file or directory : " + dir.getName());
         return dir.delete();
     }
 }
